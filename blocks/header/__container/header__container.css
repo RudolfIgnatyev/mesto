@@ -5,3 +5,10 @@
   margin: 0 auto;
   padding-top: 45px;
 }
+
+@media (max-width: 767px) {
+  .header__container {
+    width: 100%;
+    padding-top: 28px;
+  }
+}
