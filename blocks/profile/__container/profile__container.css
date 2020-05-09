@@ -1,0 +1,9 @@
+.profile__container {
+  width: 68.9vw;
+  max-width: 882px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 40px auto 0;
+}

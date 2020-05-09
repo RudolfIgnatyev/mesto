@@ -1,0 +1,6 @@
+.profile__area {
+  width: 486px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

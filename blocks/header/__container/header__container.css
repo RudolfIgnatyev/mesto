@@ -1,7 +1,7 @@
 .header__container {
   width: 68.9vw;
   max-width: 882px;
-  border-bottom: 1px solid rgba(84, 84, 84, .7);
+  border-bottom: 1px solid rgba(84, 84, 84, .3);
   margin: 0 auto;
   padding-top: 45px;
 }
