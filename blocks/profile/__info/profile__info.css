@@ -1,8 +1,17 @@
 .profile__info {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: max-content max-content;
+  grid-template-areas: "title edit-button" "subtitle subtitle";
   grid-column-gap: 17px;
   grid-row-gap: 16px;
   padding-top: 18px;
   padding-bottom: 25px;
+}
+
+@media (max-width: 767px) {
+  .profile__info {
+    grid-column-gap: 5px;
+    grid-row-gap: 14px;
+    padding: 0;
+  }
 }

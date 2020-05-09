@@ -9,10 +9,19 @@
   border: 1px solid #ffffff;
   padding: 0;
   align-self: flex-end;
+  grid-area: edit-button;
 }
 
 .profile__edit-button:hover {
   border: 1px solid rgba(255, 255, 255, 0.6);
   cursor: pointer;
   opacity: 0.4;
+}
+
+@media (max-width: 767px) {
+  .profile__edit-button {
+    width: 18px;
+    height: 18px;
+    background-size: 8px 8px;
+  }
 }
