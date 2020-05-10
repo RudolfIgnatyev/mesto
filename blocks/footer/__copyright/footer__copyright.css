@@ -1,7 +1,6 @@
 .footer__copyright {
-  width: calc(100vw*(882/1280));
   max-width: 882px;
-  color: #545454;;
+  color: #545454;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.22;
@@ -9,3 +8,17 @@
   padding-bottom: 60px;
 }
 
+@media (max-width: 1023px) {
+  .footer__copyright {
+    width: calc(2*282px + 18px);
+  }
+}
+
+@media (max-width: 767px) {
+  .footer__copyright {
+    width: 282px;
+    font-size: 14px;
+    line-height: 1.21;
+    padding-bottom: 36px;
+  }
+}
