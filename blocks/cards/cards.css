@@ -2,7 +2,7 @@
 @import url(./__image/cards__image.css);
 @import url(./__area/cards__area.css);
 @import url(./__title/cards__title.css);
-@import url(./__sign/cards__sign.css);
+@import url(./__like-icon/cards__like-icon.css);
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 282px);

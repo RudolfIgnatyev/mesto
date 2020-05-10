@@ -3,6 +3,9 @@
   font-size: 42px;
   font-weight: 500;
   line-height: 1.33;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 0 0 -12px;
   grid-area: title;
 }
