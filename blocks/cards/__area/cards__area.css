@@ -1,0 +1,8 @@
+.cards__area {
+  background: #ffffff;
+  max-width: 282px;
+  min-height: calc(361px - 282px);
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
