@@ -4,14 +4,12 @@
   max-width: 486px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 
 @media (max-width: 767px) {
   .profile__area {
     width: calc(100vw*(282/320));
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
   }
 }

@@ -11,3 +11,10 @@
   cursor: pointer;
   opacity: 0.6;
 }
+
+@media (max-width: 767px) {
+  .popup__close-icon {
+    right: calc((100% - (100% - 41px)) - 41px);
+    top: calc((100% - 330px)/2 - 50px);
+  }
+}

@@ -18,8 +18,8 @@ function formSubmitHandler(evt) {
   evt.preventDefault();
   const newName = nameInput.value;
   const newJob = jobInput.value;
-  profileTitle.textContent = newName;
-  profileSubtitle.textContent = newJob;
+  profileTitle.innerText = newName;
+  profileSubtitle.innerText = newJob;
 }
 
 function hidePopup() {

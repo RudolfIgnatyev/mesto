@@ -10,3 +10,9 @@
   padding: 0;
   padding-bottom: 8px;
 }
+
+@media (max-width: 767px) {
+  .popup__field {
+    width: calc((100vw - 41px)*(358/430));
+  }
+}

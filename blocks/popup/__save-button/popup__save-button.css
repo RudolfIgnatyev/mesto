@@ -17,3 +17,9 @@
   cursor: pointer;
   opacity: 0.8;
 }
+
+@media (max-width: 767px) {
+  .popup__save-button {
+    width: calc((100vw - 41px)*(358/430));
+  }
+}

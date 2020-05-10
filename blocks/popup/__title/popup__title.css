@@ -6,5 +6,12 @@
   font-weight: 900;
   line-height: 1.21;
   margin: 34px 0 0;
-  padding-left: 36px;
+  padding: 0 36px 0;
+}
+
+@media (max-width: 767px) {
+  .popup__title {
+    max-width: calc((100vw - 41px)*(358/430));
+    padding: 0 calc((100vw - 41px)*(1 - 358/430)/2) 0;
+  }
 }
