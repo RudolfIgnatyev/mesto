@@ -1,6 +1,7 @@
 .profile__area {
   min-width: 486px;
   width: calc(100vw*(486/1280));
+  max-width: 486px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

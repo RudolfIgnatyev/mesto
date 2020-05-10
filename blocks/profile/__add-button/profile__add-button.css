@@ -6,6 +6,9 @@
   background-size: 22px 22px;
   background-position: center;
   background-repeat: no-repeat;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   border: 2px solid #ffffff;
   border-radius: 2px;
   padding: 0;

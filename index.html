@@ -32,12 +32,24 @@
           <button class="profile__add-button"></button>
         </div>
       </section>
+
+      <section class="popup">
+        <form class="popup__container">
+          <h2 class="popup__title">Редактировать профиль</h2>
+          <input class="popup__field popup__field_el_name" type="text">
+          <input class="popup__field popup__field_el_profession" type="text">
+          <input class="popup__save-button" type="submit" value="Сохранить">
+        </form>
+        <img class="popup__close-icon" src="./images/profile-add.svg" alt="храм в Карачаевске">
+      </section>
+
       <section class="elements">
         <ul class="cards">
           <li class="cards__item">
             <img class="cards__image" src="./images/element-karachaevsk.jpg" alt="храм в Карачаевске">
             <div class="cards__area">
               <h3 class="cards__title">Карачаевск</h3>
+              <!-- (?) потом заменить class у всех img с cards__sign на cards__like-icon -->
               <img class="cards__sign" src="images/element-heart.svg" alt="значок сердца">
             </div>
           </li>
@@ -83,4 +95,7 @@
       <p class="footer__copyright" lang="en">&copy; 2020 Mesto Russia</p>
     </footer>
   </div>
+  <script src="./js/script.js"></script>
 </body>
+
+</html>

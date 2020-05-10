@@ -1,0 +1,13 @@
+.popup__close-icon {
+  width: 41px;
+  height: 41px;
+  transform: rotate(45deg);
+  position: fixed;
+  right: calc((100% - 430px)/2 - 41px);
+  top: calc((100% - 330px)/2 - 41px);
+}
+
+.popup__close-icon:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
