@@ -1,10 +1,18 @@
 .popup__close-icon {
   width: 41px;
   height: 41px;
+  background-image: url(../../../images/profile-add.svg);
+  background-color: transparent;
+  background-size: cover;
+  border: none;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
   transform: rotate(45deg);
   position: fixed;
   right: calc((100% - 430px)/2 - 41px);
   top: calc((100% - 330px)/2 - 41px);
+  padding: 0;
 }
 
 .popup__close-icon:hover {
@@ -21,6 +29,6 @@
 
 @media (max-width: 408px) {
   .popup__close-icon {
-    top: calc((100% - 330px)/2 - 50px);
+    top: calc((100% - 330px)/2 - 60px);
   }
 }

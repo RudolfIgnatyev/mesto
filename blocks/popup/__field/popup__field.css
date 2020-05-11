@@ -9,10 +9,21 @@
   line-height: 1.21;
   padding: 0;
   padding-bottom: 8px;
+  margin-bottom: 30px;
+}
+
+.popup__field:last-of-type {
+  margin-bottom: 0;
 }
 
 @media (max-width: 767px) {
   .popup__field {
     width: calc((100vw - 41px)*(358/430));
+  }
+}
+
+@media (max-width: 408px) {
+  .popup__field {
+    width: calc(100vw*(273/320));
   }
 }

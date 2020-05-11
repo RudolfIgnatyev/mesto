@@ -15,11 +15,17 @@
 
 .popup__save-button:hover {
   cursor: pointer;
-  opacity: 0.8;
+  background-color: rgba(0, 0, 0, .8);
 }
 
 @media (max-width: 767px) {
   .popup__save-button {
     width: calc((100vw - 41px)*(358/430));
+  }
+}
+
+@media (max-width: 408px) {
+  .popup__save-button {
+    width: calc(100vw*(273/320));
   }
 }

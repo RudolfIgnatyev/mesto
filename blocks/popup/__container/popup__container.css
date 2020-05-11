@@ -14,3 +14,9 @@
     width: calc(100% - 41px);
   }
 }
+
+@media (max-width: 408px) {
+  .popup__container {
+    width: 100%;
+  }
+}
