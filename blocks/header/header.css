@@ -1,9 +1,8 @@
 @import url(./__logo/header__logo.css);
-
 .header {
   width: calc(100vw*(882/1280));
   max-width: 882px;
-  border-bottom: 1px solid rgba(84, 84, 84, .3);
+  border-bottom: 1px solid rgba(84, 84, 84, .7);
   margin: 0 auto;
   padding-top: 45px;
 }
