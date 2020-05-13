@@ -29,8 +29,8 @@ function formSubmitHandler(evt) {
   const newName = nameInput.value;
   const newJob = jobInput.value;
   // Вставляем новые значения
-  profileTitle.innerText = newName;
-  profileSubtitle.innerText = newJob;
+  profileTitle.textContent = newName;
+  profileSubtitle.textContent = newJob;
   // Вызываем функцию скрытия попапа
   hidePopup();
 }
