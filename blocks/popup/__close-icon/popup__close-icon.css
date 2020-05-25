@@ -1,3 +1,5 @@
+@import url(./_type/popup__close-icon_type_profile.css);
+@import url(./_type/popup__close-icon_type_cards.css);
 .popup__close-icon {
   width: 41px;
   height: 41px;

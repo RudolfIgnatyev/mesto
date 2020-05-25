@@ -6,7 +6,7 @@
 .cards-list {
   display: grid;
   grid-template-columns: repeat(3, 282px);
-  grid-template-rows: repeat(2, 361px);
+  grid-template-rows: repeat(auto, 361px);
   grid-column-gap: 18px;
   grid-row-gap: 21px;
   justify-content: center;
@@ -18,14 +18,14 @@
 @media (max-width: 1023px) {
   .cards-list {
     grid-template-columns: repeat(2, 282px);
-    grid-template-rows: repeat(3, 361px);
+    grid-template-rows: repeat(auto, 361px);
   }
 }
 
 @media (max-width: 767px) {
   .cards-list {
     grid-template-columns: 282px;
-    grid-template-rows: repeat(6, 361px);
+    grid-template-rows: repeat(auto, 361px);
     grid-column-gap: 0;
     grid-row-gap: 20px;
   }

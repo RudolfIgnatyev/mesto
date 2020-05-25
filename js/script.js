@@ -1,15 +1,23 @@
 // Находим элементы в DOM
 const editButton = document.querySelector('.profile__edit-button');
-const editProfile = document.querySelector('.popup');
-const closeIcon = document.querySelector('.popup__close-icon');
-const formElement = document.querySelector('.popup__container');
+const addButton = document.querySelector('.profile__add-button');
+const editProfile = document.querySelector('.popup_type_profile');
+const addCards = document.querySelector('.popup_type_cards');
+const closeIconProfile = document.querySelector('.popup__close-icon_type_profile');
+const closeIconCards = document.querySelector('.popup__close-icon_type_cards');
+const formProfile = document.querySelector('.popup__container_type_profile');
+const formCards = document.querySelector('.popup__container_type_cards');
+const popupTitle = document.querySelector('.popup__title');
 const saveButton = document.querySelector('.popup__save-button');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const nameInput = document.querySelector('.popup__field_el_name');
 const jobInput = document.querySelector('.popup__field_el_profession');
+const placeInput = document.querySelector('.popup__field_el_place');
+const linkInput = document.querySelector('.popup__field_el_link');
 const cardsList = document.querySelector('.cards-list');
 const cardTemplate = document.querySelector('#cards-list__item-template').content;
+
 // Определяем базовый массив карточек
 const initialCards = [
   {
@@ -39,19 +47,47 @@ const initialCards = [
 ];
 
 // Функция показа попапа
-function showPopup() {
-  editProfile.classList.add('popup_opened');
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubtitle.textContent;
+function showPopup(modifier) {
+  modifier.classList.add('popup_opened');
+
+  if (modifier === editProfile) {
+    nameInput.value = profileTitle.textContent;
+    jobInput.value = profileSubtitle.textContent;
+  }
 }
 
-// Функция скрытия попапа
-function hidePopup() {
-  editProfile.classList.remove('popup_opened');
+function hidePopup(modifier) {
+  modifier.classList.remove('popup_opened');
 }
 
-// Обработчик «отправки» формы
-function formSubmitHandler(evt) {
+// Функция добавления новой карточки
+function addCard(name, link) {
+  const cardElement = cardTemplate.cloneNode(true);
+  // Добавляем текст содержимому тега заголовка
+  cardElement.querySelector('.cards-list__title').textContent = name;
+  // Добавляем атрибутам тега картинки значения
+  cardElement.querySelector('.cards-list__image').src = link;
+  cardElement.querySelector('.cards-list__image').alt = name;
+  cardsList.prepend(cardElement);
+}
+
+// «Передаём» базовые карточки функции добавления новой карточки
+initialCards.forEach(function (item) {
+  addCard(item.name, item.link);
+});
+
+// Обработчик «отправки» формы добавления карточки
+function formCardsSubmitHandler(evt) {
+  // Отменяем стандартную отправку формы
+  evt.preventDefault();
+  // Вызываем функцию добавления новой карточки
+  addCard(placeInput.value, linkInput.value);
+  // Вызываем функцию скрытия попапа
+  hidePopup(addCards);
+}
+
+// Обработчик «отправки» формы редактирования профиля
+function formProfileSubmitHandler(evt) {
   // Отменяем стандартную отправку формы
   evt.preventDefault();
   // Получаем значение полей из свойства value
@@ -61,25 +97,13 @@ function formSubmitHandler(evt) {
   profileTitle.textContent = newName;
   profileSubtitle.textContent = newJob;
   // Вызываем функцию скрытия попапа
-  hidePopup();
+  hidePopup(editProfile);
 }
-
-// Функция добавления новой карточки
-function addCard(name, link) {
-  const cardElement = cardTemplate.cloneNode(true);
-
-  cardElement.querySelector('.cards-list__title').textContent = name;
-  cardElement.querySelector('.cards-list__image').src = link;
-  cardElement.querySelector('.cards-list__image').alt = name;
-  cardsList.append(cardElement);
-}
-
-// Перебирем элементы массива базовых карточек
-initialCards.forEach(function (item) {
-  addCard(item.name, item.link);
-});
 
 // Прикрепляем обработчики к элементам
-editButton.addEventListener('click', showPopup);
-closeIcon.addEventListener('click', hidePopup);
-formElement.addEventListener('submit', formSubmitHandler);
+editButton.addEventListener('click', () => showPopup(editProfile));
+addButton.addEventListener('click', () => showPopup(addCards));
+closeIconProfile.addEventListener('click', () => hidePopup(editProfile));
+closeIconCards.addEventListener('click', () => hidePopup(addCards));
+formProfile.addEventListener('submit', formProfileSubmitHandler);
+formCards.addEventListener('submit', formCardsSubmitHandler);

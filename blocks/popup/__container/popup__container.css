@@ -1,3 +1,5 @@
+@import url(./_type/popup__container_type_profile.css);
+@import url(./_type/popup__container_type_cards.css);
 .popup__container {
   background-color: #ffffff;
   width: 430px;

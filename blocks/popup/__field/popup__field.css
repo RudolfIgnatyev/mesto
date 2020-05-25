@@ -1,3 +1,7 @@
+@import url(./_el/popup__field_el_name.css);
+@import url(./_el/popup__field_el_profession.css);
+@import url(./_el/popup__field_el_place.css);
+@import url(./_el/popup__field_el_link.css);
 .popup__field {
   width: calc(430px*(358/430));
   height: 19px;
@@ -10,6 +14,14 @@
   padding: 0;
   padding-bottom: 8px;
   margin-bottom: 30px;
+}
+
+.popup__field::-moz-placeholder {
+  color: #c4c4c4;
+}
+
+.popup__field::-webkit-input-placeholder {
+  color: #c4c4c4;
 }
 
 .popup__field:last-of-type {

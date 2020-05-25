@@ -32,16 +32,23 @@
 
         </ul>
       </section>
-      <section class="popup">
-        <form class="popup__container" name="popup__container" action="#" method="POST">
+      <section class="popup popup_type_profile">
+        <form class="popup__container popup__container_type_profile" name="popup__container_type_profile" action="#" method="POST">
           <h2 class="popup__title">Редактировать профиль</h2>
-          <input class="popup__field popup__field_el_name" type="text" name="popup__field_el_name"
-            placeholder="Введите имя" required>
-          <input class="popup__field popup__field_el_profession" type="text" name="popup__field_el_profession"
-            placeholder="Введите профессию" required>
+          <input class="popup__field popup__field_el_name" type="text" name="popup__field_el_name" placeholder="Введите имя" required>
+          <input class="popup__field popup__field_el_profession" type="text" name="popup__field_el_profession" placeholder="Введите профессию" required>
           <button class="popup__save-button" type="submit">Сохранить</button>
         </form>
-        <button class="popup__close-icon" type="button" aria-label="Закрыть"></button>
+        <button class="popup__close-icon popup__close-icon_type_profile" type="button" aria-label="Закрыть"></button>
+      </section>
+      <section class="popup popup_type_cards">
+        <form class="popup__container popup__container_type_cards" name="popup__container_type_cards" action="#" method="POST">
+          <h2 class="popup__title">Новое место</h2>
+          <input class="popup__field popup__field_el_place" type="text" name="popup__field_el_place" placeholder="Название" required>
+          <input class="popup__field popup__field_el_link" type="text" name="popup__field_el_link" placeholder="Ссылка на картинку" required>
+          <button class="popup__save-button" type="submit">Создать</button>
+        </form>
+        <button class="popup__close-icon popup__close-icon_type_cards" type="button" aria-label="Закрыть"></button>
       </section>
     </main>
     <footer class="footer">
