@@ -91,8 +91,9 @@ function manageCard(name, link) {
     })
   });
 
-  // Открываем картинку
+  // Перебираем картинки
   cardsListImage.forEach(function (item) {
+    // Прикрепляем обработчик к картинке для её открытия
     item.addEventListener('click', function () {
       showPopup(zoomImages);
 
@@ -104,8 +105,9 @@ function manageCard(name, link) {
     })
   });
 
-  // Закрываем картинку
+  // Перебираем кнопки закрытия картинки
   closeIconImages.forEach(function (item) {
+    // Прикрепляем обработчик к кнопке закрытия картинки для закрытия картинки
     item.addEventListener('click', function () {
       hidePopup(zoomImages);
     })
