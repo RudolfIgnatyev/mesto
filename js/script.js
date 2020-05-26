@@ -3,8 +3,10 @@ const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const editProfile = document.querySelector('.popup_type_profile');
 const addCards = document.querySelector('.popup_type_cards');
+const zoomImages = document.querySelector('.popup_type_images');
 const closeIconProfile = document.querySelector('.popup__close-icon_type_profile');
 const closeIconCards = document.querySelector('.popup__close-icon_type_cards');
+const closeIconImages = document.querySelectorAll('.popup__close-icon_type_images');
 const formProfile = document.querySelector('.popup__container_type_profile');
 const formCards = document.querySelector('.popup__container_type_cards');
 const popupTitle = document.querySelector('.popup__title');
@@ -15,10 +17,10 @@ const nameInput = document.querySelector('.popup__field_el_name');
 const jobInput = document.querySelector('.popup__field_el_profession');
 const placeInput = document.querySelector('.popup__field_el_place');
 const linkInput = document.querySelector('.popup__field_el_link');
+const popupImage = document.querySelector('.popup__image');
+const popupCaption = document.querySelector('.popup__caption');
 const cardsList = document.querySelector('.cards-list');
-/**/const cardsItem = document.querySelectorAll('.cards-list__item');
 const cardTemplate = document.querySelector('#cards-list__item-template').content;
-
 // Определяем базовый массив карточек
 const initialCards = [
   {
@@ -67,6 +69,7 @@ function manageCard(name, link) {
   // Находим элементы внутри cardElement
   const cardTitle = cardElement.querySelector('.cards-list__title');
   const cardImage = cardElement.querySelector('.cards-list__image');
+  const cardsListImage = cardElement.querySelectorAll('.cards-list__image');
   const cardLike = cardElement.querySelector('.cards-list__like-icon');
   const cardDelete = cardElement.querySelectorAll('.cards-list__delete-icon');
 
@@ -85,6 +88,26 @@ function manageCard(name, link) {
   cardDelete.forEach(function (item) {
     item.addEventListener('click', function () {
       item.parentNode.parentNode.removeChild(item.parentNode);
+    })
+  });
+
+  // Открываем картинку
+  cardsListImage.forEach(function (item) {
+    item.addEventListener('click', function () {
+      showPopup(zoomImages);
+
+      // Добавляем атрибутам тега картинки значения
+      popupImage.src = item.src;
+      popupImage.alt = item.alt;
+      // Добавляем текст содержимому тега подписи картинки
+      popupCaption.textContent = name;
+    })
+  });
+
+  // Закрываем картинку
+  closeIconImages.forEach(function (item) {
+    item.addEventListener('click', function () {
+      hidePopup(zoomImages);
     })
   });
 

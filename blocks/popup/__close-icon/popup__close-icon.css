@@ -1,8 +1,8 @@
 @import url(./_type/popup__close-icon_type_profile.css);
 @import url(./_type/popup__close-icon_type_cards.css);
 .popup__close-icon {
-  width: 41px;
-  height: 41px;
+  width: 40px;
+  height: 40px;
   background-image: url(../../../images/profile-add.svg);
   background-color: transparent;
   background-size: cover;
@@ -12,8 +12,8 @@
   -webkit-box-sizing: border-box;
   transform: rotate(45deg);
   position: fixed;
-  right: calc((100% - 430px)/2 - 41px);
-  top: calc((100% - 330px)/2 - 41px);
+  right: calc((100% - 430px)/2 - 40px);
+  top: calc((100% - 330px)/2 - 40px);
   padding: 0;
 }
 
