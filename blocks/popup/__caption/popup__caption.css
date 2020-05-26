@@ -4,5 +4,14 @@
   font-weight: 400;
   line-height: 1.15;
   align-self: flex-start;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin: 10px 0 16px 40px;
+}
+
+@media (max-width: 767px) {
+  .popup__caption {
+    margin: 10px 0 6px 30px;
+  }
 }

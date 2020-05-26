@@ -6,3 +6,9 @@
   flex-direction: column;
   align-items: flex-end;
 }
+
+@media (max-width: 767px) {
+  .popup__image-container {
+    max-width: calc(75vw + 2*30px);
+  }
+}
