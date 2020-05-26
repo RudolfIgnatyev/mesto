@@ -3,6 +3,7 @@
 @import url(./__area/cards-list__area.css);
 @import url(./__title/cards-list__title.css);
 @import url(./__like-icon/cards-list__like-icon.css);
+@import url(./__delete-icon/cards-list__delete-icon.css);
 .cards-list {
   display: grid;
   grid-template-columns: repeat(3, 282px);

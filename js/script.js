@@ -16,6 +16,7 @@ const jobInput = document.querySelector('.popup__field_el_profession');
 const placeInput = document.querySelector('.popup__field_el_place');
 const linkInput = document.querySelector('.popup__field_el_link');
 const cardsList = document.querySelector('.cards-list');
+/**/const cardsItem = document.querySelectorAll('.cards-list__item');
 const cardTemplate = document.querySelector('#cards-list__item-template').content;
 
 // Определяем базовый массив карточек
@@ -60,20 +61,40 @@ function hidePopup(modifier) {
   modifier.classList.remove('popup_opened');
 }
 
-// Функция добавления новой карточки
-function addCard(name, link) {
+// Функция управления (добавления, «лайка» и удаления) карточками
+function manageCard(name, link) {
   const cardElement = cardTemplate.cloneNode(true);
+  // Находим элементы внутри cardElement
+  const cardTitle = cardElement.querySelector('.cards-list__title');
+  const cardImage = cardElement.querySelector('.cards-list__image');
+  const cardLike = cardElement.querySelector('.cards-list__like-icon');
+  const cardDelete = cardElement.querySelectorAll('.cards-list__delete-icon');
+
   // Добавляем текст содержимому тега заголовка
-  cardElement.querySelector('.cards-list__title').textContent = name;
+  cardTitle.textContent = name;
   // Добавляем атрибутам тега картинки значения
-  cardElement.querySelector('.cards-list__image').src = link;
-  cardElement.querySelector('.cards-list__image').alt = name;
+  cardImage.src = link;
+  cardImage.alt = name;
+
+  // Прикрепляем обработчик к кнопке «нравится»
+  cardLike.addEventListener('click', function (evt) {
+    evt.target.classList.toggle('cards-list__like-icon_active');
+  });
+
+  // Прикрепляем обработчик к кнопке удаления карточки
+  cardDelete.forEach(function (item) {
+    item.addEventListener('click', function () {
+      item.parentNode.parentNode.removeChild(item.parentNode);
+    })
+  });
+
+  // Добавляем новую карточку в начало контейнера
   cardsList.prepend(cardElement);
 }
 
 // «Передаём» базовые карточки функции добавления новой карточки
 initialCards.forEach(function (item) {
-  addCard(item.name, item.link);
+  manageCard(item.name, item.link);
 });
 
 // Обработчик «отправки» формы добавления карточки
@@ -81,7 +102,7 @@ function formCardsSubmitHandler(evt) {
   // Отменяем стандартную отправку формы
   evt.preventDefault();
   // Вызываем функцию добавления новой карточки
-  addCard(placeInput.value, linkInput.value);
+  manageCard(placeInput.value, linkInput.value);
   // Вызываем функцию скрытия попапа
   hidePopup(addCards);
 }

@@ -1,7 +1,10 @@
-.cards-list__like-icon {
-  width: 21px;
-  height: 18px;
-  background-image: url(../../../images/element-heart.svg);
+.cards-list__delete-icon {
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  width: 18px;
+  height: 19px;
+  background-image: url(../../../images/element-basket.svg);
   background-color: transparent;
   background-size: content;
   border: none;
@@ -9,11 +12,9 @@
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   padding: 0;
-  margin-right: 21px;
-  align-self: center;
 }
 
-.cards-list__like-icon:hover {
+.cards-list__delete-icon:hover {
   cursor: pointer;
   opacity: 0.6;
 }
