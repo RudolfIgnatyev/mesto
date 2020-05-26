@@ -24,13 +24,9 @@
 
 @media (max-width: 767px) {
   .popup__close-icon {
-    right: calc((100% - (100% - 41px)) - 41px);
-    top: calc((100% - 330px)/2 - 41px);
-  }
-}
-
-@media (max-width: 408px) {
-  .popup__close-icon {
-    top: calc((100% - 330px)/2 - 60px);
+    width: 30px;
+    height: 30px;
+    right: calc((100vw - 75vw)/2 - 30px);
+    top: calc((100% - 258px)/2 - 30px);
   }
 }

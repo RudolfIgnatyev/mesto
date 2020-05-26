@@ -20,12 +20,10 @@
 
 @media (max-width: 767px) {
   .popup__save-button {
-    width: calc((100vw - 41px)*(358/430));
-  }
-}
-
-@media (max-width: 408px) {
-  .popup__save-button {
-    width: calc(100vw*(273/320));
+    width: 62.5vw;
+    height: 40px;
+    font-size: 14px;
+    line-height: 1.21;
+    margin: 36px 0 30px;
   }
 }

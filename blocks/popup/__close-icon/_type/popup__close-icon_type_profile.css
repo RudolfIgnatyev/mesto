@@ -1,1 +1,5 @@
-
+@media (max-width: 367px) {
+  .popup__close-icon_type_profile {
+    top: calc((100% - 279px)/2 - 30px);
+  }
+}

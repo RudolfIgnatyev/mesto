@@ -11,7 +11,11 @@
 
 @media (max-width: 767px) {
   .popup__title {
-    max-width: calc((100vw - 41px)*(358/430));
-    padding: 0 calc((100vw - 41px)*(1 - 358/430)/2) 0;
+    max-width: 62.5vw;
+    font-size: 18px;
+    line-height: 1.22;
+    margin: 30px 0 30px;
+    padding: 0 20px 0;
+    padding: 0 calc((75vw - 62.5vw)/2) 0;
   }
 }

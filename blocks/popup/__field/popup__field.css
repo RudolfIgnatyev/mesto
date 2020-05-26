@@ -30,12 +30,10 @@
 
 @media (max-width: 767px) {
   .popup__field {
-    width: calc((100vw - 41px)*(358/430));
-  }
-}
-
-@media (max-width: 408px) {
-  .popup__field {
-    width: calc(100vw*(273/320));
+    width: 62.5vw;
+    height: 16px;
+    font-size: 12px;
+    line-height: 1.25;
+    margin-bottom: 20px;
   }
 }
