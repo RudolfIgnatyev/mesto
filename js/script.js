@@ -9,8 +9,6 @@ const closeIconCards = document.querySelector('.popup__close-icon_type_cards');
 const closeIconImages = document.querySelectorAll('.popup__close-icon_type_images');
 const formProfile = document.querySelector('.popup__container_type_profile');
 const formCards = document.querySelector('.popup__container_type_cards');
-const popupTitle = document.querySelector('.popup__title');
-const saveButton = document.querySelector('.popup__save-button');
 const profileTitle = document.querySelector('.profile__title');
 const profileSubtitle = document.querySelector('.profile__subtitle');
 const nameInput = document.querySelector('.popup__field_el_name');
@@ -88,21 +86,18 @@ function manageCard(name, link) {
   cardDelete.forEach(function (item) {
     item.addEventListener('click', function () {
       item.parentNode.parentNode.removeChild(item.parentNode);
-    })
+    });
   });
 
-  // Перебираем картинки
-  cardsListImage.forEach(function (item) {
-    // Прикрепляем обработчик к картинке для её открытия
-    item.addEventListener('click', function () {
-      showPopup(zoomImages);
+  // Прикрепляем обработчик к картинке для её открытия
+  cardImage.addEventListener('click', function () {
+    showPopup(zoomImages);
 
-      // Добавляем атрибутам тега картинки значения
-      popupImage.src = item.src;
-      popupImage.alt = item.alt;
-      // Добавляем текст содержимому тега подписи картинки
-      popupCaption.textContent = name;
-    })
+    // Добавляем атрибутам тега картинки значения
+    popupImage.src = cardImage.src;
+    popupImage.alt = cardImage.alt;
+    // Добавляем текст содержимому тега подписи картинки
+    popupCaption.textContent = cardTitle.textContent;
   });
 
   // Перебираем кнопки закрытия картинки
@@ -110,7 +105,7 @@ function manageCard(name, link) {
     // Прикрепляем обработчик к кнопке закрытия картинки для закрытия картинки
     item.addEventListener('click', function () {
       hidePopup(zoomImages);
-    })
+    });
   });
 
   // Добавляем новую карточку в начало контейнера
