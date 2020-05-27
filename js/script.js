@@ -67,7 +67,6 @@ function manageCard(name, link) {
   // Находим элементы внутри cardElement
   const cardTitle = cardElement.querySelector('.cards-list__title');
   const cardImage = cardElement.querySelector('.cards-list__image');
-  const cardsListImage = cardElement.querySelectorAll('.cards-list__image');
   const cardLike = cardElement.querySelector('.cards-list__like-icon');
   const cardDelete = cardElement.querySelectorAll('.cards-list__delete-icon');
 
