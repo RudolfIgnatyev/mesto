@@ -13,3 +13,11 @@
 .popup__error:last-of-type {
   margin-bottom: 0;
 }
+
+@media (max-width: 767px) {
+  .popup__error {
+    width: 62.5vw;
+    margin-bottom: 1px;
+    padding: 0 calc((75vw - 62.5vw)/2) 0;
+  }
+}
