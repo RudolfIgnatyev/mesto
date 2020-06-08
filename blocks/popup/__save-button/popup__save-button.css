@@ -10,7 +10,7 @@
   font-weight: 400;
   line-height: 1.22;
   padding: 0;
-  margin: 48px 0 37px;
+  margin: 7px 0 22px;
 }
 
 .popup__save-button:hover {
@@ -24,6 +24,7 @@
     height: 40px;
     font-size: 14px;
     line-height: 1.21;
+    /* пересчитаю в работе над адаптивом */
     margin: 36px 0 30px;
   }
 }

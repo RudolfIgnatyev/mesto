@@ -13,7 +13,7 @@
   line-height: 1.21;
   padding: 0;
   padding-bottom: 8px;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 
 .popup__field::-moz-placeholder {
@@ -22,10 +22,6 @@
 
 .popup__field::-webkit-input-placeholder {
   color: #c4c4c4;
-}
-
-.popup__field:last-of-type {
-  margin-bottom: 0;
 }
 
 @media (max-width: 767px) {

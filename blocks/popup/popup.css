@@ -6,6 +6,11 @@
 @import url(./__field/popup__field.css);
 @import url(./__field/_el/popup__field_el_name.css);
 @import url(./__field/_el/popup__field_el_profession.css);
+@import url(./__field/_el/popup__field_el_place.css);
+@import url(./__field/_el/popup__field_el_link.css);
+@import url(./__field/_type/popup__field_type_error.css);
+@import url(./__error/popup__error.css);
+@import url(./__error/_visible/popup__error_visible.css);
 @import url(./__save-button/popup__save-button.css);
 @import url(./__image/popup__image.css);
 @import url(./__caption/popup__caption.css);
