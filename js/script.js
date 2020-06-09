@@ -1,6 +1,7 @@
 // Находим элементы в DOM
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
+const popupOverlay = document.querySelectorAll('.popup');
 const editProfile = document.querySelector('.popup_type_profile');
 const addCards = document.querySelector('.popup_type_cards');
 const zoomImages = document.querySelector('.popup_type_images');
@@ -50,6 +51,8 @@ const initialCards = [
 // Функция показа попапа
 function showPopup(modifier) {
   modifier.classList.add('popup_opened');
+  // Прикрепляем обработчик клика на клавишу
+  document.addEventListener('keydown', handleEscapeKeyPressed);
 
   if (modifier === editProfile) {
     nameInput.value = profileTitle.textContent;
@@ -57,8 +60,11 @@ function showPopup(modifier) {
   }
 }
 
+// Функция скрытия попапа
 function hidePopup(modifier) {
   modifier.classList.remove('popup_opened');
+  // Удалям обработчик клика на клавишу
+  document.removeEventListener('keydown', handleEscapeKeyPressed);
 }
 
 // Функция управления (добавления, «лайка» и удаления) карточками
@@ -68,7 +74,7 @@ function manageCard(name, link) {
   const cardTitle = cardElement.querySelector('.cards-list__title');
   const cardImage = cardElement.querySelector('.cards-list__image');
   const cardLike = cardElement.querySelector('.cards-list__like-icon');
-  const cardDelete = cardElement.querySelectorAll('.cards-list__delete-icon');
+  const cardDelete = cardElement.querySelector('.cards-list__delete-icon');
 
   // Добавляем текст содержимому тега заголовка
   cardTitle.textContent = name;
@@ -77,15 +83,13 @@ function manageCard(name, link) {
   cardImage.alt = name;
 
   // Прикрепляем обработчик к кнопке «нравится»
-  cardLike.addEventListener('click', function (evt) {
-    evt.target.classList.toggle('cards-list__like-icon_active');
+  cardLike.addEventListener('click', function () {
+    cardLike.classList.toggle('cards-list__like-icon_active');
   });
 
   // Прикрепляем обработчик к кнопке удаления карточки
-  cardDelete.forEach(function (item) {
-    item.addEventListener('click', function () {
-      item.parentNode.parentNode.removeChild(item.parentNode);
-    });
+  cardDelete.addEventListener('click', function () {
+    cardDelete.parentNode.parentNode.removeChild(cardDelete.parentNode);
   });
 
   // Прикрепляем обработчик к картинке для её открытия
@@ -140,6 +144,22 @@ function formProfileSubmitHandler(evt) {
   hidePopup(editProfile);
 }
 
+// Обработчик клика на оверлей
+function handleOverlayClicked(evt) {
+  if (evt.target.classList.contains('popup')) {
+    // Вызываем функцию скрытия попапа
+    hidePopup(evt.target);
+  }
+}
+
+// Обработчик клика на клавишу Escape
+function handleEscapeKeyPressed(evt) {
+  if (evt.key === 'Escape') {
+    // Вызываем функцию скрытия попапа
+    hidePopup(document.querySelector('.popup_opened'));
+  }
+}
+
 // Прикрепляем обработчики к элементам
 editButton.addEventListener('click', () => showPopup(editProfile));
 addButton.addEventListener('click', () => showPopup(addCards));
@@ -147,3 +167,4 @@ closeIconProfile.addEventListener('click', () => hidePopup(editProfile));
 closeIconCards.addEventListener('click', () => hidePopup(addCards));
 formProfile.addEventListener('submit', formProfileSubmitHandler);
 formCards.addEventListener('submit', formCardsSubmitHandler);
+document.addEventListener('click', handleOverlayClicked);

@@ -8,13 +8,13 @@ function enableValidation(settings) {
     const submitButton = formElement.querySelector(settings.submitButtonSelector);
 
     inputList.forEach((inputElement) => {
-      // Прикрепляем обработчик ввода текста в поле для проверки валидности вполя
+      // Прикрепляем обработчик ввода текста в поле для проверки его валидности
       inputElement.addEventListener('input', evt => displayInputError(evt, settings.inputErrorClass));
-    })
+    });
 
     // Прикрепляем обработчик ввода текста в поле для проверки валидности формы
     formElement.addEventListener('input', () => toggleSubmitButtonErrorClass(formElement, submitButton, settings.inactiveButtonClass));
-  })
+  });
 }
 
 // Показываем/удаляем класс поля при его проверке на валидность
@@ -35,7 +35,7 @@ function displayInputError(evt, inputErrorClass) {
   }
 }
 
-// Показываем/удаляем класс кнопки при проверке формы на валидность
+// Показываем/удаляем класс недоступности кнопки при проверке формы на валидность
 function toggleSubmitButtonErrorClass(formElement, submitButton, inactiveButtonClass){
   const formIsNotValid = !formElement.checkValidity();
   submitButton.disabled = formIsNotValid;
