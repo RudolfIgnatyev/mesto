@@ -1,7 +1,6 @@
 // Находим элементы в DOM
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
-const popupOverlay = document.querySelectorAll('.popup');
 const editProfile = document.querySelector('.popup_type_profile');
 const addCards = document.querySelector('.popup_type_cards');
 const zoomImages = document.querySelector('.popup_type_images');
@@ -47,6 +46,14 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+// Обработчик клика на клавишу Escape
+function handleEscapeKeyPressed(evt) {
+  if (evt.key === 'Escape') {
+    // Вызываем функцию скрытия попапа
+    hidePopup(document.querySelector('.popup_opened'));
+  }
+}
 
 // Функция показа попапа
 function showPopup(modifier) {
@@ -149,14 +156,6 @@ function handleOverlayClicked(evt) {
   if (evt.target.classList.contains('popup')) {
     // Вызываем функцию скрытия попапа
     hidePopup(evt.target);
-  }
-}
-
-// Обработчик клика на клавишу Escape
-function handleEscapeKeyPressed(evt) {
-  if (evt.key === 'Escape') {
-    // Вызываем функцию скрытия попапа
-    hidePopup(document.querySelector('.popup_opened'));
   }
 }
 

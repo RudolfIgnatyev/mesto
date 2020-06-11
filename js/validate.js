@@ -1,22 +1,3 @@
-// Функция включения валидации форм
-function enableValidation(settings) {
-  const formList = Array.from(document.querySelectorAll(settings.formSelector));
-
-  formList.forEach((formElement) => {
-    // Находим элементы внутри formElement
-    const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
-    const submitButton = formElement.querySelector(settings.submitButtonSelector);
-
-    inputList.forEach((inputElement) => {
-      // Прикрепляем обработчик ввода текста в поле для проверки его валидности
-      inputElement.addEventListener('input', evt => displayInputError(evt, settings.inputErrorClass));
-    });
-
-    // Прикрепляем обработчик ввода текста в поле для проверки валидности формы
-    formElement.addEventListener('input', () => toggleSubmitButtonErrorClass(formElement, submitButton, settings.inactiveButtonClass));
-  });
-}
-
 // Показываем/удаляем класс поля при его проверке на валидность
 function displayInputError(evt, inputErrorClass) {
   const inputElement = evt.target;
@@ -40,6 +21,25 @@ function toggleSubmitButtonErrorClass(formElement, submitButton, inactiveButtonC
   const formIsNotValid = !formElement.checkValidity();
   submitButton.disabled = formIsNotValid;
   submitButton.classList.toggle(inactiveButtonClass, formIsNotValid);
+}
+
+// Функция включения валидации форм
+function enableValidation(settings) {
+  const formList = Array.from(document.querySelectorAll(settings.formSelector));
+
+  formList.forEach((formElement) => {
+    // Находим элементы внутри formElement
+    const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
+    const submitButton = formElement.querySelector(settings.submitButtonSelector);
+
+    inputList.forEach((inputElement) => {
+      // Прикрепляем обработчик ввода текста в поле для проверки его валидности
+      inputElement.addEventListener('input', evt => displayInputError(evt, settings.inputErrorClass));
+    });
+
+    // Прикрепляем обработчик ввода текста в поле для проверки валидности формы
+    formElement.addEventListener('input', () => toggleSubmitButtonErrorClass(formElement, submitButton, settings.inactiveButtonClass));
+  });
 }
 
 // Включаем валидацию вызовом enableValidation
