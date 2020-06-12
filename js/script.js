@@ -47,11 +47,18 @@ const initialCards = [
   }
 ];
 
+// Функция скрытия попапа
+function hidePopup(modifier) {
+  modifier.classList.remove('popup_opened');
+}
+
 // Обработчик клика на клавишу Escape
 function handleEscapeKeyPressed(evt) {
   if (evt.key === 'Escape') {
     // Вызываем функцию скрытия попапа
     hidePopup(document.querySelector('.popup_opened'));
+    // Удалям обработчик клика на клавишу
+    this.removeEventListener('keydown', handleEscapeKeyPressed);
   }
 }
 
@@ -65,13 +72,6 @@ function showPopup(modifier) {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileSubtitle.textContent;
   }
-}
-
-// Функция скрытия попапа
-function hidePopup(modifier) {
-  modifier.classList.remove('popup_opened');
-  // Удалям обработчик клика на клавишу
-  document.removeEventListener('keydown', handleEscapeKeyPressed);
 }
 
 // Функция управления (добавления, «лайка» и удаления) карточками
