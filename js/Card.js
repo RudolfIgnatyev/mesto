@@ -38,12 +38,14 @@ class Card {
     this._cardSelector = cardSelector;
   }
 
+  // Метод клонирования содержимого селектора шаблона
   _getTemplate() {
     const cardElement = document.querySelector(this._cardSelector).content.cloneNode(true);
 
     return cardElement;
   }
 
+  // Публичный метод генерирования карточки
   generateCard() {
     this._element = this._getTemplate();
     this._setEventListeners();
@@ -55,14 +57,17 @@ class Card {
     return this._element;
   }
 
-  _likeCard() {
-    this.classList.toggle('cards-list__like-icon_active');
+  // Метод пометки понравившейся карточки
+  _likeCard(cardLikeElement) {
+    cardLikeElement.classList.toggle('cards-list__like-icon_active');
   }
 
-  _deleteCard() {
-    this.parentNode.parentNode.removeChild(this.parentNode);
+  // Метод удаления карточки
+  _deleteCard(cardDeleteElement) {
+    cardDeleteElement.parentNode.parentNode.removeChild(cardDeleteElement.parentNode);
   }
 
+  // Метод скрытия попапа карточки нажатием на клавишу Escape
   _handleEscKeyPressed(evt) {
     if (evt.key === 'Escape') {
       zoomImages.classList.remove('popup_opened');
@@ -72,6 +77,7 @@ class Card {
     }
   }
 
+  // Метод показа попапа карточки
   _showCardPopup() {
     popupImage.src = this._link;
     popupImage.alt = this._name;
@@ -84,13 +90,16 @@ class Card {
     document.addEventListener('keydown', this._handleEscKeyPressedByContext);
   }
 
+  // Метод прикрепления обработчиков к элементам
   _setEventListeners() {
-    this._element.querySelector('.cards-list__like-icon').addEventListener('click', () => {
-      this._likeCard();
+    Array.from(this._element.querySelectorAll('.cards-list__like-icon')).forEach((cardLikeElement) => {
+      cardLikeElement.addEventListener('click', () => this._likeCard(cardLikeElement));
     });
-    this._element.querySelector('.cards-list__delete-icon').addEventListener('click', () => {
-      this._deleteCard();
+
+    Array.from(this._element.querySelectorAll('.cards-list__delete-icon')).forEach((cardDeleteElement) => {
+      cardDeleteElement.addEventListener('click', () => this._deleteCard(cardDeleteElement));
     });
+
     this._element.querySelector('.cards-list__image').addEventListener('click', () => {
       this._showCardPopup();
     });

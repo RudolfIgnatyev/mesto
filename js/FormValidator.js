@@ -1,4 +1,4 @@
-//
+// Объект настроек с селекторами и классами формы
 const selectorsAndClasses = {
   formSelector: '.popup__container',
   inputSelector: '.popup__field',
@@ -20,6 +20,7 @@ class FormValidator {
 
   }
 
+  // Публичный метод включения валидации формы
   enableValidation() {
     this._setEventListeners();
   }
@@ -49,6 +50,7 @@ class FormValidator {
     this._submitButtonSelector.classList.toggle(this._inactiveButtonClass, formIsNotValid);
   }
 
+  // Метод прикрепления обработчиков к элементам
   _setEventListeners() {
     this._formSelector.forEach((formElement) => {
       this._inputSelector.forEach((inputElement) => {
