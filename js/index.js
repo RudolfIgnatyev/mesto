@@ -1,4 +1,5 @@
 import { initialCards, zoomImages, Card } from './Card.js';
+import { selectorsAndClasses, FormValidator } from './FormValidator.js';
 
 // Функция добавления новой карточки в DOM
 function newCard(item) {
@@ -52,6 +53,13 @@ function showPopup(modifier) {
   if (modifier === editProfile) {
     nameInput.value = profileTitle.textContent;
     jobInput.value = profileSubtitle.textContent;
+
+    const editProfileForValidation = new FormValidator(selectorsAndClasses, editProfile);
+    editProfileForValidation.enableValidation();
+  }
+  if (modifier === addCards) {
+    const addCardsForValidation = new FormValidator(selectorsAndClasses, addCards);
+    addCardsForValidation.enableValidation();
   }
 }
 
