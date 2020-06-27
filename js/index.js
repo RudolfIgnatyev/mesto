@@ -57,19 +57,25 @@ const placeInput = document.querySelector('.popup__field_el_place');
 const linkInput = document.querySelector('.popup__field_el_link');
 
 // Функция добавления новой карточки в DOM
+function putCardIntoDom(cardElement, item) {
+  // Добавляем в DOM
+  item.name === placeInput.value ? document.querySelector('.cards-list').prepend(cardElement) : document.querySelector('.cards-list').append(cardElement);
+}
+
+// Функция создания новой карточки
 function newCard(item) {
   const card = new Card(item, '#cards-list__item-template');
   const cardElement = card.generateCard();
 
-  // Добавляем в DOM
-  document.querySelector('.cards-list').prepend(cardElement);
+  // Вызываем функцию добавления новой карточки в DOM
+  putCardIntoDom(cardElement, item);
 }
 
 initialCards.forEach(newCard);
 
 // Функция скрытия попапа
-function hidePopup(modifier) {
-  modifier.classList.remove('popup_opened');
+function hidePopup(popup) {
+  popup.classList.remove('popup_opened');
 }
 
 // Обработчик клика на клавишу Escape
@@ -82,23 +88,37 @@ function handleEscapeKeyPressed(evt) {
   }
 }
 
+// Обработчик клика на оверлей
+function handleOverlayClicked(evt) {
+  if (evt.target.classList.contains('popup')) {
+    // Вызываем функцию скрытия попапа
+    hidePopup(evt.target);
+    // Удалям обработчик клика на оверлей
+    this.removeEventListener('keydown', handleOverlayClicked);
+  }
+}
+
+// Функция активации валидации формы
+function activateValidation(currentForm) {
+  const formValidator = new FormValidator(selectorsAndClasses, currentForm);
+  formValidator.enableValidation();
+}
+
 // Функция показа попапа
-function showPopup(modifier) {
-  modifier.classList.add('popup_opened');
+function showPopup(popup) {
+  popup.classList.add('popup_opened');
   // Прикрепляем обработчик клика на клавишу
   document.addEventListener('keydown', handleEscapeKeyPressed);
+  // Прикрепляем обработчик клика на оверлей
+  document.addEventListener('click', handleOverlayClicked);
+  // Вызываем функцию активации валидации формы
+  activateValidation(popup);
+}
 
-  if (modifier === editProfile) {
-    nameInput.value = profileTitle.textContent;
-    jobInput.value = profileSubtitle.textContent;
-
-    const editProfileForValidation = new FormValidator(selectorsAndClasses, editProfile);
-    editProfileForValidation.enableValidation();
-  }
-  if (modifier === addCards) {
-    const addCardsForValidation = new FormValidator(selectorsAndClasses, addCards);
-    addCardsForValidation.enableValidation();
-  }
+// Функция вложения в поля формы editProfile значений по умолчанию
+function putEditProfileDefaultValues() {
+  nameInput.value = profileTitle.textContent;
+  jobInput.value = profileSubtitle.textContent;
 }
 
 // Обработчик «отправки» формы добавления карточки
@@ -130,20 +150,14 @@ function formProfileSubmitHandler(evt) {
   hidePopup(editProfile);
 }
 
-// Обработчик клика на оверлей
-function handleOverlayClicked(evt) {
-  if (evt.target.classList.contains('popup')) {
-    // Вызываем функцию скрытия попапа
-    hidePopup(evt.target);
-  }
-}
-
 // Прикрепляем обработчики к элементам
-editButton.addEventListener('click', () => showPopup(editProfile));
+editButton.addEventListener('click', () => {
+  showPopup(editProfile);
+  putEditProfileDefaultValues();
+});
 addButton.addEventListener('click', () => showPopup(addCards));
 closeIconProfile.addEventListener('click', () => hidePopup(editProfile));
 closeIconCards.addEventListener('click', () => hidePopup(addCards));
 closeIconImages.addEventListener('click', () => hidePopup(zoomImages));
 formProfile.addEventListener('submit', formProfileSubmitHandler);
 formCards.addEventListener('submit', formCardsSubmitHandler);
-document.addEventListener('click', handleOverlayClicked);
