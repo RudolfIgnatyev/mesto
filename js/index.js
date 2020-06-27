@@ -1,16 +1,33 @@
-import { initialCards, zoomImages, Card } from './Card.js';
+import { zoomImages, Card } from './Card.js';
 import { selectorsAndClasses, FormValidator } from './FormValidator.js';
 
-// Функция добавления новой карточки в DOM
-function newCard(item) {
-  const card = new Card(item, '#cards-list__item-template');
-  const cardElement = card.generateCard();
-
-  // Добавляем в DOM
-  document.querySelector('.cards-list').prepend(cardElement);
-}
-
-initialCards.forEach(newCard);
+// Определяем базовый массив карточек
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Йошкар-Ола',
+    link: 'https://images.unsplash.com/photo-1591996686974-2e2f871e3c09?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
 
 // Находим элементы в DOM
 const editButton = document.querySelector('.profile__edit-button');
@@ -28,6 +45,17 @@ const nameInput = document.querySelector('.popup__field_el_name');
 const jobInput = document.querySelector('.popup__field_el_profession');
 const placeInput = document.querySelector('.popup__field_el_place');
 const linkInput = document.querySelector('.popup__field_el_link');
+
+// Функция добавления новой карточки в DOM
+function newCard(item) {
+  const card = new Card(item, '#cards-list__item-template');
+  const cardElement = card.generateCard();
+
+  // Добавляем в DOM
+  document.querySelector('.cards-list').prepend(cardElement);
+}
+
+initialCards.forEach(newCard);
 
 // Функция скрытия попапа
 function hidePopup(modifier) {
