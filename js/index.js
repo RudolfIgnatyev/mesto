@@ -1,5 +1,5 @@
 import { zoomImages, Card } from './Card.js';
-import { selectorsAndClasses, FormValidator } from './FormValidator.js';
+import { FormValidator } from './FormValidator.js';
 
 // Определяем базовый массив карточек
 const initialCards = [
@@ -28,6 +28,16 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+
+// Объект настроек с селекторами и классами формы
+const selectorsAndClasses = {
+  formSelector: '.popup__container',
+  inputSelector: '.popup__field',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__field_type_error',
+  errorClass: 'popup__error_visible'
+};
 
 // Находим элементы в DOM
 const editButton = document.querySelector('.profile__edit-button');
