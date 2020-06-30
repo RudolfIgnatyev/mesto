@@ -50,6 +50,18 @@ class Card {
     }
   }
 
+  // Метод скрытия попапа карточки кликом на оверлей
+  _handleCardOverlayClicked(evt) {
+    if (evt.target.classList.contains('popup')) {
+      zoomImages.classList.remove('popup_opened');
+
+      console.log('overlay');
+
+      // Удалям обработчик клика на оверлей
+      document.removeEventListener('click', this._handleCardOverlayClickedByContext);
+    }
+  }
+
   // Метод показа попапа карточки
   _showCardPopup() {
     popupImage.src = this._link;
@@ -59,8 +71,13 @@ class Card {
 
     // Связываем метод _handleEscKeyPressed с контекстом
     this._handleEscKeyPressedByContext = this._handleEscKeyPressed.bind(this);
+    // Связываем метод handleCardOverlayClicked с контекстом
+    this._handleCardOverlayClickedByContext = this._handleCardOverlayClicked.bind(this);
+
     // Прикрепляем обработчик клика на клавишу
     document.addEventListener('keydown', this._handleEscKeyPressedByContext);
+    // Прикрепляем обработчик клика на оверлей
+    document.addEventListener('click', this._handleCardOverlayClickedByContext);
   }
 
   // Метод прикрепления обработчиков к элементам

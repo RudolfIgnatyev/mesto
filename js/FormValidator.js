@@ -2,7 +2,6 @@ class FormValidator {
   constructor(data, formForValidation) {
     this._formForValidation = formForValidation;
     this._formSelector = this._formForValidation.querySelector(data.formSelector);
-    console.log(this._formSelector);
     this._inputSelector = Array.from(this._formForValidation.querySelectorAll(data.inputSelector));
     this._submitButtonSelector = this._formForValidation.querySelector(data.submitButtonSelector);
     this._inactiveButtonClass = data.inactiveButtonClass;

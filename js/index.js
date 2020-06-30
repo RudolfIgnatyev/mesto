@@ -58,30 +58,37 @@ const linkInput = document.querySelector('.popup__field_el_link');
 
 // Создаём объект editProfileValidator класса FormValidator
 const editProfileValidator = new FormValidator(selectorsAndClasses, editProfile);
-// Активируем валидацию форм
+// Активируем валидацию формы редактирования профиля
 editProfileValidator.enableValidation();
 // Создаём объект addCardsValidator класса FormValidator
 const addCardsValidator = new FormValidator(selectorsAndClasses, addCards);
-// Активируем валидацию форм
+// Активируем валидацию формы добавления карточки
 addCardsValidator.enableValidation();
-
-
-// Функция добавления новой карточки в DOM
-function putCardIntoDom(cardElement, item) {
-  // Добавляем в DOM
-  item.name === placeInput.value ? document.querySelector('.cards-list').prepend(cardElement) : document.querySelector('.cards-list').append(cardElement);
-}
 
 // Функция создания новой карточки
 function newCard(item) {
   const card = new Card(item, '#cards-list__item-template');
   const cardElement = card.generateCard();
 
-  // Вызываем функцию добавления новой карточки в DOM
-  putCardIntoDom(cardElement, item);
+  // Возвращаем новую карточку
+  return cardElement;
 }
 
-initialCards.forEach(newCard);
+// Функция добавления новой карточки из базового массива карточек в DOM
+function putCardFromDefaultArrayIntoDom(item) {
+  const cardElement = newCard(item);
+  // Добавляем созданную новую карточку в DOM
+  document.querySelector('.cards-list').append(cardElement);
+}
+
+initialCards.forEach(putCardFromDefaultArrayIntoDom);
+
+// Функция добавления новой карточки из формы добавления карточки в DOM
+function putCardFromCardsFormIntoDom(item) {
+  const cardElement = newCard(item);
+  // Добавляем созданную новую карточку в DOM
+  document.querySelector('.cards-list').prepend(cardElement);
+}
 
 // Функция скрытия попапа
 function hidePopup(popup) {
@@ -136,8 +143,9 @@ function formCardsSubmitHandler(evt) {
     name: placeInput.value,
     link: linkInput.value
   };
-  // Вызываем функцию добавления новой карточки в DOM
-  newCard(formCardsValues);
+  // Вызываем функцию добавления новой карточки из формы добавления карточки в DOM
+  putCardFromCardsFormIntoDom(formCardsValues);
+
   // Вызываем функцию скрытия попапа
   hidePopup(addCards);
 }
