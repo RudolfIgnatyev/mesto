@@ -56,6 +56,16 @@ const jobInput = document.querySelector('.popup__field_el_profession');
 const placeInput = document.querySelector('.popup__field_el_place');
 const linkInput = document.querySelector('.popup__field_el_link');
 
+// Создаём объект editProfileValidator класса FormValidator
+const editProfileValidator = new FormValidator(selectorsAndClasses, editProfile);
+// Активируем валидацию форм
+editProfileValidator.enableValidation();
+// Создаём объект addCardsValidator класса FormValidator
+const addCardsValidator = new FormValidator(selectorsAndClasses, addCards);
+// Активируем валидацию форм
+addCardsValidator.enableValidation();
+
+
 // Функция добавления новой карточки в DOM
 function putCardIntoDom(cardElement, item) {
   // Добавляем в DOM
@@ -94,25 +104,21 @@ function handleOverlayClicked(evt) {
     // Вызываем функцию скрытия попапа
     hidePopup(evt.target);
     // Удалям обработчик клика на оверлей
-    this.removeEventListener('keydown', handleOverlayClicked);
+    this.removeEventListener('click', handleOverlayClicked);
   }
-}
-
-// Функция активации валидации формы
-function activateValidation(currentForm) {
-  const formValidator = new FormValidator(selectorsAndClasses, currentForm);
-  formValidator.enableValidation();
 }
 
 // Функция показа попапа
 function showPopup(popup) {
   popup.classList.add('popup_opened');
+  // Очищаем поля формы от прошлых значений
+  popup.querySelector(selectorsAndClasses.formSelector).reset();
+  // Очищаем валидацию формы
+  editProfileValidator.resetValidation();
   // Прикрепляем обработчик клика на клавишу
   document.addEventListener('keydown', handleEscapeKeyPressed);
   // Прикрепляем обработчик клика на оверлей
   document.addEventListener('click', handleOverlayClicked);
-  // Вызываем функцию активации валидации формы
-  activateValidation(popup);
 }
 
 // Функция вложения в поля формы editProfile значений по умолчанию

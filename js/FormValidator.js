@@ -2,6 +2,7 @@ class FormValidator {
   constructor(data, formForValidation) {
     this._formForValidation = formForValidation;
     this._formSelector = this._formForValidation.querySelector(data.formSelector);
+    console.log(this._formSelector);
     this._inputSelector = Array.from(this._formForValidation.querySelectorAll(data.inputSelector));
     this._submitButtonSelector = this._formForValidation.querySelector(data.submitButtonSelector);
     this._inactiveButtonClass = data.inactiveButtonClass;
@@ -11,6 +12,15 @@ class FormValidator {
   // Публичный метод включения валидации формы
   enableValidation() {
     this._setEventListeners();
+  }
+
+  // Публичный метод очистки валидации формы
+  resetValidation() {
+    Array.from(this._formForValidation.querySelectorAll('.popup__error')).forEach((errorElement) => {
+      errorElement.textContent = '';
+    });
+
+    this._submitButtonSelector.classList.toggle(this._inactiveButtonClass, false);
   }
 
   // Показываем/удаляем класс поля при его проверке на валидность
@@ -45,7 +55,6 @@ class FormValidator {
     this._inputSelector.forEach((inputElement) => {
       inputElement.addEventListener('input', this._displayInputError);
     });
-
     formElement.addEventListener('input', () => this._toggleSubmitButtonErrorClass(formElement));
   }
 }
