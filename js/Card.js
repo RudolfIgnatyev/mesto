@@ -55,8 +55,6 @@ class Card {
     if (evt.target.classList.contains('popup')) {
       zoomImages.classList.remove('popup_opened');
 
-      console.log('overlay');
-
       // Удалям обработчик клика на оверлей
       document.removeEventListener('click', this._handleCardOverlayClickedByContext);
     }
