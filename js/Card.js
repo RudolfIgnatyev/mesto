@@ -30,16 +30,14 @@ class Card {
   }
 
   // Метод пометки понравившейся карточки
-  _likeCard(cardLikeElement) {
-    this._element = cardLikeElement;
-    this._element.classList.toggle('cards-list__like-icon_active');
+  _likeCard() {
+    this.classList.toggle('cards-list__like-icon_active');
   }
 
   // Метод удаления карточки
-  _deleteCard(cardDeleteElement) {
-    this._element = cardDeleteElement;
-    this._element.remove();
-    this._element = null;
+  _deleteCard() {
+    this.parentNode.remove();
+    this.parentNode = null;
   }
 
   // Метод скрытия попапа карточки нажатием на клавишу Escape
@@ -67,17 +65,8 @@ class Card {
 
   // Метод прикрепления обработчиков к элементам
   _setEventListeners() {
-    const cardLikeElement = this._element.querySelector('.cards-list__like-icon');
-    const cardDeleteElement = this._element.querySelector('.cards-list__item');
-
-    cardLikeElement.addEventListener('click', () => {
-      this._likeCard(cardLikeElement);
-    });
-
-    this._element.querySelector('.cards-list__delete-icon').addEventListener('click', () => {
-      this._deleteCard(cardDeleteElement);
-    });
-
+    this._element.querySelector('.cards-list__like-icon').addEventListener('click', this._likeCard);
+    this._element.querySelector('.cards-list__delete-icon').addEventListener('click', this._deleteCard);
     this._element.querySelector('.cards-list__image').addEventListener('click', () => {
       this._showCardPopup();
     });
