@@ -19,7 +19,7 @@ class FormValidator {
       errorElement.textContent = '';
     });
 
-    this._submitButtonSelector.classList.toggle(this._inactiveButtonClass, false);
+    this._toggleSubmitButtonErrorClass();
   }
 
   // Показываем/удаляем класс поля при его проверке на валидность
@@ -41,20 +41,18 @@ class FormValidator {
   }
 
   // Показываем/удаляем класс недоступности кнопки при проверке формы на валидность
-  _toggleSubmitButtonErrorClass(formElement) {
-    const formIsNotValid = !formElement.checkValidity();
+  _toggleSubmitButtonErrorClass() {
+    const formIsNotValid = !this._formSelector.checkValidity();
     this._submitButtonSelector.disabled = formIsNotValid;
     this._submitButtonSelector.classList.toggle(this._inactiveButtonClass, formIsNotValid);
   }
 
   // Метод прикрепления обработчиков к элементам
   _setEventListeners() {
-    const formElement = this._formSelector;
-
     this._inputSelector.forEach((inputElement) => {
       inputElement.addEventListener('input', this._displayInputError);
     });
-    formElement.addEventListener('input', () => this._toggleSubmitButtonErrorClass(formElement));
+    this._formSelector.addEventListener('input', this._toggleSubmitButtonErrorClass.bind(this));
   }
 }
 

@@ -1,4 +1,4 @@
-import { zoomImages, Card } from './Card.js';
+import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 
 // Определяем базовый массив карточек
@@ -46,7 +46,6 @@ const editProfile = document.querySelector('.popup_type_profile');
 const addCards = document.querySelector('.popup_type_cards');
 const closeIconProfile = document.querySelector('.popup__close-icon_type_profile');
 const closeIconCards = document.querySelector('.popup__close-icon_type_cards');
-const closeIconImages = document.querySelector('.popup__close-icon_type_images');
 const formProfile = document.querySelector('.popup__container_type_profile');
 const formCards = document.querySelector('.popup__container_type_cards');
 const profileTitle = document.querySelector('.profile__title');
@@ -93,6 +92,11 @@ function putCardFromCardsFormIntoDom(item) {
 // Функция скрытия попапа
 function hidePopup(popup) {
   popup.classList.remove('popup_opened');
+
+  // Удалям обработчик клика на клавишу
+  document.removeEventListener('keydown', handleEscapeKeyPressed);
+  // Удалям обработчик клика на оверлей
+  document.removeEventListener('click', handleOverlayClicked);
 }
 
 // Обработчик клика на клавишу Escape
@@ -100,8 +104,6 @@ function handleEscapeKeyPressed(evt) {
   if (evt.key === 'Escape') {
     // Вызываем функцию скрытия попапа
     hidePopup(document.querySelector('.popup_opened'));
-    // Удалям обработчик клика на клавишу
-    this.removeEventListener('keydown', handleEscapeKeyPressed);
   }
 }
 
@@ -110,8 +112,6 @@ function handleOverlayClicked(evt) {
   if (evt.target.classList.contains('popup')) {
     // Вызываем функцию скрытия попапа
     hidePopup(evt.target);
-    // Удалям обработчик клика на оверлей
-    this.removeEventListener('click', handleOverlayClicked);
   }
 }
 
@@ -172,6 +172,5 @@ editButton.addEventListener('click', () => {
 addButton.addEventListener('click', () => showPopup(addCards));
 closeIconProfile.addEventListener('click', () => hidePopup(editProfile));
 closeIconCards.addEventListener('click', () => hidePopup(addCards));
-closeIconImages.addEventListener('click', () => hidePopup(zoomImages));
 formProfile.addEventListener('submit', formProfileSubmitHandler);
 formCards.addEventListener('submit', formCardsSubmitHandler);
