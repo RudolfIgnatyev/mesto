@@ -1,6 +1,7 @@
 // Находим элементы в DOM
 const zoomImages = document.querySelector('.popup_type_images');
 const popupImage = document.querySelector('.popup__image');
+const closeIconImages = document.querySelector('.popup__close-icon_type_images');
 const popupCaption = document.querySelector('.popup__caption');
 
 class Card {
@@ -90,6 +91,9 @@ class Card {
     this._element.querySelector('.cards-list__delete-icon').addEventListener('click', this._deleteCard.bind(this));
     this._element.querySelector('.cards-list__image').addEventListener('click', () => {
       this._showCardPopup();
+    });
+    closeIconImages.addEventListener('click', () => {
+      this._hideCardPopup();
     });
   }
 }
