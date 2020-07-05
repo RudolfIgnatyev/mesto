@@ -20,7 +20,7 @@ class Card {
   _getTemplate() {
     const cardElement = document.querySelector(this._cardSelector).content.cloneNode(true);
 
-    return cardElement;
+    return cardElement.firstElementChild;
   }
 
   // Публичный метод генерирования карточки
