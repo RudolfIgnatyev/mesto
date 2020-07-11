@@ -95,44 +95,44 @@ cardsRenderer.renderItems();
 //   document.querySelector('.cards-list').prepend(cardElement);
 // }
 
-// Функция скрытия попапа
-function hidePopup(popup) {
-  popup.classList.remove('popup_opened');
+// // Функция скрытия попапа
+// function hidePopup(popup) {
+//   popup.classList.remove('popup_opened');
 
-  // Удалям обработчик клика на клавишу
-  document.removeEventListener('keydown', handleEscapeKeyPressed);
-  // Удалям обработчик клика на оверлей
-  document.removeEventListener('click', handleOverlayClicked);
-}
+//   // Удалям обработчик клика на клавишу
+//   document.removeEventListener('keydown', handleEscapeKeyPressed);
+//   // Удалям обработчик клика на оверлей
+//   document.removeEventListener('click', handleOverlayClicked);
+// }
 
-// Обработчик клика на клавишу Escape
-function handleEscapeKeyPressed(evt) {
-  if (evt.key === 'Escape') {
-    // Вызываем функцию скрытия попапа
-    hidePopup(document.querySelector('.popup_opened'));
-  }
-}
+// // Обработчик клика на клавишу Escape
+// function handleEscapeKeyPressed(evt) {
+//   if (evt.key === 'Escape') {
+//     // Вызываем функцию скрытия попапа
+//     hidePopup(document.querySelector('.popup_opened'));
+//   }
+// }
 
-// Обработчик клика на оверлей
-function handleOverlayClicked(evt) {
-  if (evt.target.classList.contains('popup')) {
-    // Вызываем функцию скрытия попапа
-    hidePopup(evt.target);
-  }
-}
+// // Обработчик клика на оверлей
+// function handleOverlayClicked(evt) {
+//   if (evt.target.classList.contains('popup')) {
+//     // Вызываем функцию скрытия попапа
+//     hidePopup(evt.target);
+//   }
+// }
 
-// Функция показа попапа
-function showPopup(popup) {
-  popup.classList.add('popup_opened');
-  // Очищаем поля формы от прошлых значений
-  popup.querySelector(selectorsAndClasses.formSelector).reset();
-  // Очищаем валидацию формы
-  editProfileValidator.resetValidation();
-  // Прикрепляем обработчик клика на клавишу
-  document.addEventListener('keydown', handleEscapeKeyPressed);
-  // Прикрепляем обработчик клика на оверлей
-  document.addEventListener('click', handleOverlayClicked);
-}
+// // Функция показа попапа
+// function showPopup(popup) {
+//   popup.classList.add('popup_opened');
+//   // Очищаем поля формы от прошлых значений
+//   popup.querySelector(selectorsAndClasses.formSelector).reset();
+//   // Очищаем валидацию формы
+//   editProfileValidator.resetValidation();
+//   // Прикрепляем обработчик клика на клавишу
+//   document.addEventListener('keydown', handleEscapeKeyPressed);
+//   // Прикрепляем обработчик клика на оверлей
+//   document.addEventListener('click', handleOverlayClicked);
+// }
 
 // Функция вложения в поля формы editProfile значений по умолчанию
 function putEditProfileDefaultValues() {
@@ -149,11 +149,11 @@ function formCardsSubmitHandler(evt) {
     name: placeInput.value,
     link: linkInput.value
   };
-  // Вызываем функцию добавления новой карточки из формы добавления карточки в DOM
+  // // Вызываем функцию добавления новой карточки из формы добавления карточки в DOM
   // putCardFromCardsFormIntoDom(formCardsValues);
 
-  // Вызываем функцию скрытия попапа
-  hidePopup(addCards);
+  // // Вызываем функцию скрытия попапа
+  // hidePopup(addCards);
 }
 
 // Обработчик «отправки» формы редактирования профиля
@@ -166,8 +166,16 @@ function formProfileSubmitHandler(evt) {
   // Вставляем новые значения
   profileTitle.textContent = newName;
   profileSubtitle.textContent = newJob;
-  // Вызываем функцию скрытия попапа
-  hidePopup(editProfile);
+  // // Вызываем функцию скрытия попапа
+  // hidePopup(editProfile);
+}
+
+// Обработчик клика на оверлей
+function handleOverlayClicked(evt) {
+  if (evt.target.classList.contains('popup')) {
+    // // Вызываем функцию скрытия попапа
+    // hidePopup(evt.target);
+  }
 }
 
 // Прикрепляем обработчики к элементам
@@ -180,3 +188,4 @@ closeIconProfile.addEventListener('click', () => hidePopup(editProfile));
 closeIconCards.addEventListener('click', () => hidePopup(addCards));
 formProfile.addEventListener('submit', formProfileSubmitHandler);
 formCards.addEventListener('submit', formCardsSubmitHandler);
+document.addEventListener('click', handleOverlayClicked);
