@@ -1,5 +1,6 @@
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
+import { Section } from './Section.js';
 
 // Определяем базовый массив карточек
 const initialCards = [
@@ -64,30 +65,35 @@ const addCardsValidator = new FormValidator(selectorsAndClasses, addCards);
 // Активируем валидацию формы добавления карточки
 addCardsValidator.enableValidation();
 
-// Функция создания новой карточки
-function newCard(item) {
-  const card = new Card(item, '#cards-list__item-template');
-  const cardElement = card.generateCard();
+// Создаём объект cardsRenderer класса Section
+const cardsRenderer = new Section({
+  items: initialCards,
+  renderer: item => {
+    const card = new Card(item, '#cards-list__item-template');
+    const cardElement = card.generateCard();
 
-  // Возвращаем новую карточку
-  return cardElement;
-}
+    // Возвращаем новую карточку
+    return cardElement;
+  }
+}, '.cards-list');
+// Отрисовываем каждый отдельный элемент
+cardsRenderer.renderItems();
 
-// Функция добавления новой карточки из базового массива карточек в DOM
-function putCardFromDefaultArrayIntoDom(item) {
-  const cardElement = newCard(item);
-  // Добавляем созданную новую карточку в DOM
-  document.querySelector('.cards-list').append(cardElement);
-}
+// // Функция создания новой карточки
+// function newCard(item) {
+//   const card = new Card(item, '#cards-list__item-template');
+//   const cardElement = card.generateCard();
 
-initialCards.forEach(putCardFromDefaultArrayIntoDom);
+//   // Возвращаем новую карточку
+//   return cardElement;
+// }
 
-// Функция добавления новой карточки из формы добавления карточки в DOM
-function putCardFromCardsFormIntoDom(item) {
-  const cardElement = newCard(item);
-  // Добавляем созданную новую карточку в DOM
-  document.querySelector('.cards-list').prepend(cardElement);
-}
+// // Функция добавления новой карточки из формы добавления карточки в DOM
+// function putCardFromCardsFormIntoDom(item) {
+//   const cardElement = newCard(item);
+//   // Добавляем созданную новую карточку в DOM
+//   document.querySelector('.cards-list').prepend(cardElement);
+// }
 
 // Функция скрытия попапа
 function hidePopup(popup) {
@@ -144,7 +150,7 @@ function formCardsSubmitHandler(evt) {
     link: linkInput.value
   };
   // Вызываем функцию добавления новой карточки из формы добавления карточки в DOM
-  putCardFromCardsFormIntoDom(formCardsValues);
+  // putCardFromCardsFormIntoDom(formCardsValues);
 
   // Вызываем функцию скрытия попапа
   hidePopup(addCards);
