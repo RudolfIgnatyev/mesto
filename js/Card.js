@@ -5,10 +5,11 @@
 // const popupCaption = document.querySelector('.popup__caption');
 
 class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, { handleCardClick }) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
 
     // // Связываем метод _handleEscKeyPressed с контекстом
     // this._handleEscKeyPressedByContext = this._handleEscKeyPressed.bind(this);
@@ -89,9 +90,9 @@ class Card {
   _setEventListeners() {
     this._element.querySelector('.cards-list__like-icon').addEventListener('click', this._likeCard.bind(this));
     this._element.querySelector('.cards-list__delete-icon').addEventListener('click', this._deleteCard.bind(this));
-    // this._element.querySelector('.cards-list__image').addEventListener('click', () => {
-    //   this._showCardPopup();
-    // });
+    this._element.querySelector('.cards-list__image').addEventListener('click', () => {
+      this._handleCardClick();
+    });
     // closeIconImages.addEventListener('click', () => {
     //   this._hideCardPopup();
     // });

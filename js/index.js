@@ -1,6 +1,7 @@
 import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 import { Section } from './Section.js';
+import { PopupWithImage } from './PopupWithImage.js';
 
 // Определяем базовый массив карточек
 const initialCards = [
@@ -65,11 +66,17 @@ const addCardsValidator = new FormValidator(selectorsAndClasses, addCards);
 // Активируем валидацию формы добавления карточки
 addCardsValidator.enableValidation();
 
+// Создаём объект imagePopup класса PopupWithImage
+const imagePopup = new PopupWithImage('.popup_type_images');
+imagePopup.setEventListeners();
+
 // Создаём объект cardsRenderer класса Section
 const cardsRenderer = new Section({
   items: initialCards,
   renderer: item => {
-    const card = new Card(item, '#cards-list__item-template');
+    const card = new Card(item, '#cards-list__item-template', {
+      handleCardClick: () => imagePopup.open(item)
+    });
     const cardElement = card.generateCard();
 
     // Возвращаем новую карточку
@@ -172,9 +179,9 @@ function formProfileSubmitHandler(evt) {
 
 // Обработчик клика на оверлей
 function handleOverlayClicked(evt) {
-  if (evt.target.classList.contains('popup')) {
-    // // Вызываем функцию скрытия попапа
-    // hidePopup(evt.target);
+  if (evt.target.classList.contains('popup_type_images')) {
+    // Вызываем публичный метод скрытия попапа карточки
+    imagePopup.close();
   }
 }
 
