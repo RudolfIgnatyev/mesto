@@ -48,9 +48,9 @@
       <section class="popup popup_type_cards">
         <form class="popup__container popup__container_type_cards" name="popup__container_type_cards" action="#" method="POST">
           <h2 class="popup__title">Новое место</h2>
-          <input class="popup__field popup__field_el_place" type="text" name="popup__field_el_place" id="place-field" placeholder="Название" required minlength="1" maxlength="30">
+          <input class="popup__field popup__field_el_place" type="text" name="name" id="place-field" placeholder="Название" required minlength="1" maxlength="30">
           <span class="popup__error" id="place-field-error"></span>
-          <input class="popup__field popup__field_el_link" type="url" name="popup__field_el_link" id="link-field" placeholder="Ссылка на картинку" required>
+          <input class="popup__field popup__field_el_link" type="url" name="link" id="link-field" placeholder="Ссылка на картинку" required>
           <span class="popup__error" id="link-field-error"></span>
           <button class="popup__save-button popup__save-button_disabled" type="submit">Создать</button>
         </form>
@@ -79,7 +79,7 @@
       </div>
     </li>
   </template>
-  <script type="module" src="./js/index.js"></script>
+  <script type="module" src="./js/pages/index.js"></script>
 </body>
 
 </html>
