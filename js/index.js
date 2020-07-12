@@ -2,6 +2,7 @@ import { Card } from './Card.js';
 import { FormValidator } from './FormValidator.js';
 import { Section } from './Section.js';
 import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
 
 // Определяем базовый массив карточек
 const initialCards = [
@@ -86,6 +87,25 @@ const cardsRenderer = new Section({
 // Отрисовываем каждый отдельный элемент
 cardsRenderer.renderItems();
 
+// Создаём объект editProfilePopup класса PopupWithForm
+const editProfilePopup = new PopupWithForm('.popup_type_profile', {
+  handleSubmitForm() {
+
+
+    console.log('Sumbited');
+  }
+});
+editProfilePopup.setEventListeners();
+
+// // Создаём объект addCardsPopup класса PopupWithForm
+// const addCardsPopup = new PopupWithForm('.popup_type_cards', {
+//   handleSubmitForm(evt) {
+//     evt.preventDefault();
+//     console.log('Hello');
+//   }
+// });
+// addCardsPopup.setEventListeners();
+
 // // Функция создания новой карточки
 // function newCard(item) {
 //   const card = new Card(item, '#cards-list__item-template');
@@ -141,11 +161,11 @@ cardsRenderer.renderItems();
 //   document.addEventListener('click', handleOverlayClicked);
 // }
 
-// Функция вложения в поля формы editProfile значений по умолчанию
-function putEditProfileDefaultValues() {
-  nameInput.value = profileTitle.textContent;
-  jobInput.value = profileSubtitle.textContent;
-}
+// // Функция вложения в поля формы editProfile значений по умолчанию
+// function putEditProfileDefaultValues() {
+//   nameInput.value = profileTitle.textContent;
+//   jobInput.value = profileSubtitle.textContent;
+// }
 
 // Обработчик «отправки» формы добавления карточки
 function formCardsSubmitHandler(evt) {
@@ -183,16 +203,23 @@ function handleOverlayClicked(evt) {
     // Вызываем публичный метод скрытия попапа карточки
     imagePopup.close();
   }
+  if (evt.target.classList.contains('popup_type_profile')) {
+    // Вызываем публичный метод скрытия попапа с формой редактирования профиля
+    editProfilePopup.close();
+  }
+  if (evt.target.classList.contains('popup_type_cards')) {
+    // Вызываем публичный метод скрытия попапа с формой добавления карточки
+    addCardsPopup.close();
+  }
 }
 
 // Прикрепляем обработчики к элементам
 editButton.addEventListener('click', () => {
-  showPopup(editProfile);
-  putEditProfileDefaultValues();
+  editProfilePopup.open();
 });
-addButton.addEventListener('click', () => showPopup(addCards));
-closeIconProfile.addEventListener('click', () => hidePopup(editProfile));
-closeIconCards.addEventListener('click', () => hidePopup(addCards));
+// addButton.addEventListener('click', () => {
+//   addCardsPopup.open();
+// });
 formProfile.addEventListener('submit', formProfileSubmitHandler);
 formCards.addEventListener('submit', formCardsSubmitHandler);
 document.addEventListener('click', handleOverlayClicked);
