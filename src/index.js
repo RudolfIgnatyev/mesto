@@ -5,7 +5,6 @@ import { PopupWithImage } from './components/PopupWithImage.js';
 import { PopupWithForm } from './components/PopupWithForm.js';
 import { UserInfo } from './components/UserInfo.js';
 import { initialCards, selectorsAndClasses } from './utils/constants.js';
-import './pages/index.css';
 
 // Находим элементы в DOM
 const editButton = document.querySelector('.profile__edit-button');
