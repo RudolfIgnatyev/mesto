@@ -1,0 +1,22 @@
+{
+  "name": "mesto",
+  "version": "0.0.1",
+  "description": "===\r Проектная работа представлена сайтом из 1 страницы, разбитой на секции. Тематика - места России, заснятые одним человеком. Эта проектная работа имеет **медиа-запросы, grid-сетку, форму в popup-окне, валидацию форм и дополнительные способы закрытия попапов, а также подключены шрифты, можно ставить лайк карточкам, добавлять и удалять карточки**. В отличие от 6 проектной работы, в этой проведён рефакторинг кода - **код следует парадигме ООП**.\r ---\r Используемые технологии:\r * язык верстки HTML5;\r * язык разметки CSS3;\r * язык программирования JavaScript;\r * IDE VS Code",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RudolfIgnatyev/mesto.git"
+  },
+  "author": "Rudolf Ignatyev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RudolfIgnatyev/mesto/issues"
+  },
+  "homepage": "https://github.com/RudolfIgnatyev/mesto#readme",
+  "devDependencies": {
+    "webpack": "^4.43.0"
+  }
+}
