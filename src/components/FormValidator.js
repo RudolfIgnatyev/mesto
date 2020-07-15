@@ -22,21 +22,39 @@ class FormValidator {
     this._toggleSubmitButtonErrorClass();
   }
 
-  // Показываем/удаляем класс поля при его проверке на валидность
-  _displayInputError(evt) {
-    const inputElement = evt.target;
-    const errorElement = document.querySelector(`#${inputElement.id}-error`);
-    // Проверяем поле на валидность
-    const inputIsValid = inputElement.checkValidity();
+  // // Показываем/удаляем класс поля при его проверке на валидность
+  // _displayInputError(evt) {
+  //   const inputElement = evt.target;
+  //   const errorElement = document.querySelector(`#${inputElement.id}-error`);
+  //   // Проверяем поле на валидность
+  //   const inputIsValid = inputElement.checkValidity();
 
-    if (!inputIsValid) {
+  //   if (!inputIsValid) {
+  //     // Не валидно - показываем ошибки
+  //     inputElement.classList.add(this._inputErrorClass);
+  //     errorElement.textContent = inputElement.validationMessage;
+  //   } else {
+  //     // Валидно - скрываем ошибки
+  //     inputElement.classList.remove(this._inputErrorClass);
+  //     errorElement.textContent = '';
+  //   }
+  // }
+
+  // Показываем класс поля при отрицательной проверке на валидность
+  _showInputError(evt) {
+    if (!evt.target.checkValidity()) {
       // Не валидно - показываем ошибки
-      inputElement.classList.add(this._inputErrorClass);
-      errorElement.textContent = inputElement.validationMessage;
-    } else {
+      evt.target.classList.add(this._inputErrorClass);
+      document.querySelector(`#${evt.target.id}-error`).textContent = evt.target.validationMessage;
+    }
+  }
+
+  // Удаляем класс поля при положительной проверке на валидность
+  _hideInputError(evt) {
+    if (evt.target.checkValidity()) {
       // Валидно - скрываем ошибки
-      inputElement.classList.remove(this._inputErrorClass);
-      errorElement.textContent = '';
+      evt.target.classList.remove(this._inputErrorClass);
+      document.querySelector(`#${evt.target.id}-error`).textContent = '';
     }
   }
 
@@ -50,7 +68,8 @@ class FormValidator {
   // Метод прикрепления обработчиков к элементам
   _setEventListeners() {
     this._inputSelector.forEach((inputElement) => {
-      inputElement.addEventListener('input', this._displayInputError);
+      inputElement.addEventListener('input', this._showInputError);
+      inputElement.addEventListener('input', this._hideInputError);
     });
     this._formSelector.addEventListener('input', this._toggleSubmitButtonErrorClass.bind(this));
   }

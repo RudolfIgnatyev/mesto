@@ -1,11 +1,11 @@
-import { Card } from './components/Card.js';
-import { FormValidator } from './components/FormValidator.js';
-import { Section } from './components/Section.js';
-import { PopupWithImage } from './components/PopupWithImage.js';
-import { PopupWithForm } from './components/PopupWithForm.js';
-import { UserInfo } from './components/UserInfo.js';
-import { initialCards, selectorsAndClasses } from './utils/constants.js';
-import './pages/index.css';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { Section } from '../components/Section.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { UserInfo } from '../components/UserInfo.js';
+import { initialCards, selectorsAndClassesOfForm, selectorsAndClassOfCard } from '../utils/constants.js';
+import './index.css';
 
 // Находим элементы в DOM
 const editButton = document.querySelector('.profile__edit-button');
@@ -16,16 +16,19 @@ const nameInput = document.querySelector('.popup__field_el_name');
 const jobInput = document.querySelector('.popup__field_el_profession');
 
 // Создаём объект editProfileValidator класса FormValidator
-const editProfileValidator = new FormValidator(selectorsAndClasses, editProfile);
+const editProfileValidator = new FormValidator(selectorsAndClassesOfForm, editProfile);
 // Активируем валидацию формы редактирования профиля
 editProfileValidator.enableValidation();
 // Создаём объект addCardsValidator класса FormValidator
-const addCardsValidator = new FormValidator(selectorsAndClasses, addCards);
+const addCardsValidator = new FormValidator(selectorsAndClassesOfForm, addCards);
 // Активируем валидацию формы добавления карточки
 addCardsValidator.enableValidation();
 
 // Создаём объект imagePopup класса PopupWithImage
-const imagePopup = new PopupWithImage('.popup_type_images');
+const imagePopup = new PopupWithImage('.popup_type_images', {
+  popupImageSelector: '.popup__image',
+  popupCaptionSelector: '.popup__caption'
+});
 imagePopup.setEventListeners();
 
 // Создаём объект cardsRenderer класса Section
@@ -35,7 +38,7 @@ const cardsRenderer = new Section({
 
     const card = new Card(item, '#cards-list__item-template', {
       handleCardClick: () => imagePopup.open(item)
-    });
+    }, selectorsAndClassOfCard);
     const cardElement = card.generateCard();
 
     // Возвращаем новую карточку
@@ -68,7 +71,7 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
 
     const newCardFromForm = new Card(inputListValuesObject, '#cards-list__item-template', {
       handleCardClick: () => imagePopup.open(inputListValuesObject)
-    });
+    }, selectorsAndClassOfCard);
     const newCardFromFormElement = newCardFromForm.generateCard();
 
     cardsRenderer.addItem(newCardFromFormElement);
@@ -79,22 +82,6 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
   }
 });
 addCardsPopup.setEventListeners();
-
-// Обработчик клика на оверлей
-function handleOverlayClicked(evt) {
-  if (evt.target.classList.contains('popup_type_images')) {
-    // Скрываем попап карточки
-    imagePopup.close();
-  }
-  if (evt.target.classList.contains('popup_type_profile')) {
-    // Скрываем попап формы редактирования профиля
-    editProfilePopup.close();
-  }
-  if (evt.target.classList.contains('popup_type_cards')) {
-    // Скрываем попап формы добавления карточки
-    addCardsPopup.close();
-  }
-}
 
 // Прикрепляем обработчики к элементам
 editButton.addEventListener('click', () => {
@@ -113,4 +100,4 @@ addButton.addEventListener('click', () => {
   // Открываем попап формы добавления карточки
   addCardsPopup.open();
 });
-document.addEventListener('click', handleOverlayClicked);
+

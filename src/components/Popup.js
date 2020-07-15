@@ -4,6 +4,8 @@ class Popup {
 
     // Связываем метод _handleEscClose с контекстом
     this._handleEscCloseByContext = this._handleEscClose.bind(this);
+    // Связываем метод _handleOverlayClose с контекстом
+    this._handleOverlayCloseByContext = this._handleOverlayClose.bind(this);
     // Связываем метод close с контекстом
     this.closeByContext = this.close.bind(this);
   }
@@ -29,9 +31,17 @@ class Popup {
     }
   }
 
+  _handleOverlayClose(evt) {
+    if (evt.target.classList.contains('popup')) {
+      // Вызываем функцию скрытия попапа
+      this.closeByContext();
+    }
+  }
+
   // Метод прикрепления обработчика к иконке закрытия попапа
   setEventListeners() {
     this._popup.querySelector('.popup__close-icon').addEventListener('click', this.closeByContext);
+    document.addEventListener('click', this._handleOverlayCloseByContext);
   }
 }
 

@@ -27,7 +27,7 @@ const initialCards = [
 ];
 
 // Объект настроек с селекторами и классами формы
-const selectorsAndClasses = {
+const selectorsAndClassesOfForm = {
   formSelector: '.popup__container',
   inputSelector: '.popup__field',
   submitButtonSelector: '.popup__save-button',
@@ -36,4 +36,13 @@ const selectorsAndClasses = {
   errorClass: 'popup__error_visible'
 };
 
-export { initialCards, selectorsAndClasses };
+// Объект настроек с селекторами и классом карточки
+const selectorsAndClassOfCard = {
+  cardImageSelector: '.cards-list__image',
+  cardTitleSelector: '.cards-list__title',
+  cardLikeIconSelector: '.cards-list__like-icon',
+  cardLikeIconActiveClass: 'cards-list__like-icon_active',
+  cardDeleteIconSelector: '.cards-list__delete-icon'
+};
+
+export { initialCards, selectorsAndClassesOfForm, selectorsAndClassOfCard };
