@@ -45,4 +45,11 @@ const selectorsAndClassOfCard = {
   cardDeleteIconSelector: '.cards-list__delete-icon'
 };
 
-export { initialCards, selectorsAndClassesOfForm, selectorsAndClassOfCard };
+// Объект настроек с селекторами и классом карточки
+const selectorsOfProfile = {
+  profileNameSelector: '.profile__title',
+  profileJobSelector: '.profile__subtitle',
+  profileAvatarSelector: '.profile__avatar'
+};
+
+export { initialCards, selectorsAndClassesOfForm, selectorsAndClassOfCard, selectorsOfProfile };
