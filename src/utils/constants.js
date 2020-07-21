@@ -14,6 +14,7 @@ const selectorsAndClassOfCard = {
   cardTitleSelector: '.cards-list__title',
   cardLikeIconSelector: '.cards-list__like-icon',
   cardLikeIconActiveClass: 'cards-list__like-icon_active',
+  cardLikeAmountTextSelector: '.cards-list__like-amount-text',
   cardDeleteIconSelector: '.cards-list__delete-icon'
 };
 

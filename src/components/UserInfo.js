@@ -14,8 +14,8 @@ class UserInfo {
   }
 
   setUserInfo(profileNewInfo) {
-    this._profileName.textContent = profileNewInfo.popup__field_el_name;
-    this._profileJob.textContent = profileNewInfo.popup__field_el_profession;
+    this._profileName.textContent = profileNewInfo.name;
+    this._profileJob.textContent = profileNewInfo.about;
   }
 }
 

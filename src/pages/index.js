@@ -16,6 +16,9 @@ const addCards = document.querySelector('.popup_type_cards');
 const nameInput = document.querySelector('.popup__field_el_name');
 const jobInput = document.querySelector('.popup__field_el_profession');
 
+// Создаём объект userInfo класса UserInfo
+const userInfo = new UserInfo(selectorsOfProfile);
+
 // Создаём объект api класса Api
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-13',
@@ -26,11 +29,11 @@ const api = new Api({
 });
 // Загружаем информацию о пользователе
 api.getUserInfo()
-  .then((result) => {
-    document.querySelector(selectorsOfProfile.profileAvatarSelector).src = result.avatar;
-    document.querySelector(selectorsOfProfile.profileAvatarSelector).alt = result.name;
-    document.querySelector(selectorsOfProfile.profileNameSelector).textContent = result.name;
-    document.querySelector(selectorsOfProfile.profileJobSelector).textContent = result.about;
+  .then((initialUserInfo) => {
+    document.querySelector(selectorsOfProfile.profileAvatarSelector).src = initialUserInfo.avatar;
+    document.querySelector(selectorsOfProfile.profileAvatarSelector).alt = initialUserInfo.name;
+
+    userInfo.setUserInfo(initialUserInfo);
   })
   .catch((err) => {
     console.log(err);
@@ -83,9 +86,6 @@ api.getInitialCards()
   .catch((err) => {
     console.log(err);
   });
-
-// Создаём объект userInfo класса UserInfo
-const userInfo = new UserInfo(selectorsOfProfile);
 
 // Создаём объект editProfilePopup класса PopupWithForm
 const editProfilePopup = new PopupWithForm('.popup_type_profile', {
