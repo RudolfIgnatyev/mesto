@@ -5,7 +5,7 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
-import { initialCards, selectorsAndClassesOfForm, selectorsAndClassOfCard, selectorsOfProfile } from '../utils/constants.js';
+import { selectorsAndClassesOfForm, selectorsAndClassOfCard, selectorsOfProfile } from '../utils/constants.js';
 import './index.css';
 
 // Находим элементы в DOM
@@ -24,6 +24,7 @@ const api = new Api({
     'Content-Type': 'application/json'
   }
 });
+// Загружаем информацию о пользователе
 api.getUserInfo()
   .then((result) => {
     document.querySelector(selectorsOfProfile.profileAvatarSelector).src = result.avatar;
@@ -51,22 +52,37 @@ const imagePopup = new PopupWithImage('.popup_type_images', {
 });
 imagePopup.setEventListeners();
 
-// Создаём объект cardsRenderer класса Section
-const cardsRenderer = new Section({
-  items: initialCards,
-  renderer: item => {
+// Объявляем переменную cardsRenderer
+let cardsRenderer;
 
-    const card = new Card(item, '#cards-list__item-template', {
-      handleCardClick: () => imagePopup.open(item)
-    }, selectorsAndClassOfCard);
-    const cardElement = card.generateCard();
+function createCardObject(initialCards) {
+  // Создаём объект cardsRenderer класса Section
+  cardsRenderer = new Section({
+    items: initialCards,
+    renderer: item => {
+      // Создаём объект card класса Card
+      const card = new Card(item, '#cards-list__item-template', {
+        handleCardClick: () => imagePopup.open(item)
+      }, selectorsAndClassOfCard);
+      const cardElement = card.generateCard();
 
-    // Возвращаем новую карточку
-    return cardElement;
-  }
-}, '.cards-list');
-// Отрисовываем каждый отдельный элемент
-cardsRenderer.renderItems();
+      // Возвращаем новую карточку
+      return cardElement;
+    }
+  }, '.cards-list');
+}
+
+// Загружаем начальные карточки
+api.getInitialCards()
+  .then((initialCards) => {
+    // Вызываем функцию создания объекта класса Section
+    createCardObject(initialCards);
+    // Отрисовываем каждый отдельный элемент
+    cardsRenderer.renderItems();
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Создаём объект userInfo класса UserInfo
 const userInfo = new UserInfo(selectorsOfProfile);

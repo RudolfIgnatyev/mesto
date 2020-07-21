@@ -22,24 +22,6 @@ class FormValidator {
     this._toggleSubmitButtonErrorClass();
   }
 
-  // // Показываем/удаляем класс поля при его проверке на валидность
-  // _displayInputError(evt) {
-  //   const inputElement = evt.target;
-  //   const errorElement = document.querySelector(`#${inputElement.id}-error`);
-  //   // Проверяем поле на валидность
-  //   const inputIsValid = inputElement.checkValidity();
-
-  //   if (!inputIsValid) {
-  //     // Не валидно - показываем ошибки
-  //     inputElement.classList.add(this._inputErrorClass);
-  //     errorElement.textContent = inputElement.validationMessage;
-  //   } else {
-  //     // Валидно - скрываем ошибки
-  //     inputElement.classList.remove(this._inputErrorClass);
-  //     errorElement.textContent = '';
-  //   }
-  // }
-
   // Показываем класс поля при отрицательной проверке на валидность
   _showInputError(evt) {
     if (!evt.target.checkValidity()) {
