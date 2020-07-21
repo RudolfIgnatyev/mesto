@@ -9,6 +9,9 @@
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/_type/popup_type_images.css);
+@import url(../blocks/popup/__title/_type/popup__title_type_card-deletion.css);
+@import url(../blocks/popup/__save-button/_type/popup__save-button_type_card-deletion.css);
 @import url(../blocks/popup/__save-button/_disabled/popup__save-button_disabled.css);
 @import url(../blocks/popup/__close-icon/_type/popup__close-icon_type_images.css);
+@import url(../blocks/popup/__close-icon/_type/popup__close-icon_type_card-deletion.css);
 @import url(../blocks/footer/footer.css);

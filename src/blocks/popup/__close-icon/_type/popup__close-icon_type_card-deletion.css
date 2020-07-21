@@ -1,0 +1,9 @@
+.popup__close-icon_type_card-deletion {
+  top: calc((100% - 181px)/2 - 40px);
+}
+
+@media (max-width: 767px) {
+  .popup__close-icon_type_card-deletion {
+    top: calc((100% - 145px)/2 - 30px);
+  }
+}

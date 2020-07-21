@@ -1,0 +1,9 @@
+.popup__title_type_card-deletion {
+  margin: 34px 0 33px;
+}
+
+@media (max-width: 767px) {
+  .popup__title_type_card-deletion {
+    margin: 30px 0 31px;
+  }
+}

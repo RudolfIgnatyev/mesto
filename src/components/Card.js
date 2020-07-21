@@ -1,10 +1,12 @@
 class Card {
-  constructor(data, cardSelector, { handleCardClick }, selectorsAndClass) {
+  constructor(data, cardSelector, { handleCardClick, deleteCard }, selectorsAndClass) {
     this._name = data.name;
     this._link = data.link;
     this._likesCounter = data.likes;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    // this._deleteCard = deleteCard || function(){};
+    this._deleteCard = deleteCard;
     this._cardImageSelector = selectorsAndClass.cardImageSelector;
     this._cardTitleSelector = selectorsAndClass.cardTitleSelector;
     this._cardLikeIconSelector = selectorsAndClass.cardLikeIconSelector;
@@ -38,16 +40,12 @@ class Card {
     this._element.querySelector(this._cardLikeIconSelector).classList.toggle(this._cardLikeIconActiveClass);
   }
 
-  // Метод удаления карточки
-  _deleteCard() {
-    this._element.remove();
-    this._element = null;
-  }
-
   // Метод прикрепления обработчиков к элементам
   _setEventListeners() {
     this._element.querySelector(this._cardLikeIconSelector).addEventListener('click', this._likeCard.bind(this));
-    this._element.querySelector(this._cardDeleteIconSelector).addEventListener('click', this._deleteCard.bind(this));
+    this._element.querySelector(this._cardDeleteIconSelector).addEventListener('click', () => {
+      this._deleteCard();
+    });
     this._element.querySelector(this._cardImageSelector).addEventListener('click', () => {
       this._handleCardClick();
     });

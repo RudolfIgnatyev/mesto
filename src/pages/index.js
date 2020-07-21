@@ -3,6 +3,7 @@ import { FormValidator } from '../components/FormValidator.js';
 import { Section } from '../components/Section.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithDeletionForm } from '../components/PopupWithDeletionForm';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
 import { selectorsAndClassesOfForm, selectorsAndClassOfCard, selectorsOfProfile } from '../utils/constants.js';
@@ -55,6 +56,15 @@ const imagePopup = new PopupWithImage('.popup_type_images', {
 });
 imagePopup.setEventListeners();
 
+// Создаём объект imageDeletionPopup класса PopupWithDeletionForm
+const imageDeletionPopup = new PopupWithDeletionForm('.popup_type_card-deletion', {
+  handleSubmitForm: () => {
+    // Скрываем попап формы подтверждения удаления карточки
+    imageDeletionPopup.close();
+  }
+});
+imageDeletionPopup.setEventListeners();
+
 // Объявляем переменную cardsRenderer
 let cardsRenderer;
 
@@ -65,7 +75,11 @@ function createCardObject(initialCards) {
     renderer: item => {
       // Создаём объект card класса Card
       const card = new Card(item, '#cards-list__item-template', {
-        handleCardClick: () => imagePopup.open(item)
+        handleCardClick: () => imagePopup.open(item),
+        deleteCard: () => {
+          // Открываем попап формы подтверждения удаления карточки
+          imageDeletionPopup.open();
+        }
       }, selectorsAndClassOfCard);
       const cardElement = card.generateCard();
 
@@ -112,7 +126,11 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
       .then((newCardObject) => {
         // Создаём объект newCardFromForm класса Card
         const newCardFromForm = new Card(newCardObject, '#cards-list__item-template', {
-          handleCardClick: () => imagePopup.open(newCardObject)
+          handleCardClick: () => imagePopup.open(newCardObject),
+          deleteCard: () => {
+            // Открываем попап формы подтверждения удаления карточки
+            imageDeletionPopup.open();
+          }
         }, selectorsAndClassOfCard);
         const newCardFromFormElement = newCardFromForm.generateCard();
 
@@ -146,4 +164,3 @@ addButton.addEventListener('click', () => {
   // Открываем попап формы добавления карточки
   addCardsPopup.open();
 });
-
