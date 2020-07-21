@@ -5,7 +5,6 @@ class Card {
     this._likesCounter = data.likes;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    // this._deleteCard = deleteCard || function(){};
     this._deleteCard = deleteCard;
     this._cardImageSelector = selectorsAndClass.cardImageSelector;
     this._cardTitleSelector = selectorsAndClass.cardTitleSelector;
