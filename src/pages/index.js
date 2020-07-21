@@ -90,10 +90,16 @@ const userInfo = new UserInfo(selectorsOfProfile);
 // Создаём объект editProfilePopup класса PopupWithForm
 const editProfilePopup = new PopupWithForm('.popup_type_profile', {
   handleSubmitForm: (inputListValuesObject) => {
-
-    // Принимаем новые данные пользователя и добавляем их на страницу
-    userInfo.setUserInfo(inputListValuesObject);
-    editProfilePopup.close();
+    // Редактируем профиль
+    api.patchProfileInfo(inputListValuesObject)
+      .then(() => {
+        // Принимаем новые данные пользователя и добавляем их на страницу
+        userInfo.setUserInfo(inputListValuesObject);
+        editProfilePopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 });
 editProfilePopup.setEventListeners();
