@@ -6,11 +6,15 @@ class Section {
   }
 
   renderItems() {
-    this._items.forEach(item => this.addItem(this._renderer(item)));
+    this._items.forEach(item => this.addItem(this._renderer(item), true));
   }
 
-  addItem(DOMElement) {
-    this._container.append(DOMElement);
+  addItem(DOMElement, endPosition) {
+    if (endPosition === true) {
+      this._container.append(DOMElement);
+    } else {
+      this._container.prepend(DOMElement);
+    }
   }
 }
 

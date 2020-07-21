@@ -92,9 +92,9 @@ const editProfilePopup = new PopupWithForm('.popup_type_profile', {
   handleSubmitForm: (inputListValuesObject) => {
     // Редактируем профиль
     api.patchProfileInfo(inputListValuesObject)
-      .then(() => {
+      .then((newUserInfo) => {
         // Принимаем новые данные пользователя и добавляем их на страницу
-        userInfo.setUserInfo(inputListValuesObject);
+        userInfo.setUserInfo(newUserInfo);
         editProfilePopup.close();
       })
       .catch((err) => {
@@ -107,17 +107,24 @@ editProfilePopup.setEventListeners();
 // Создаём объект addCardsPopup класса PopupWithForm
 const addCardsPopup = new PopupWithForm('.popup_type_cards', {
   handleSubmitForm: (inputListValuesObject) => {
+    // Добавляем новую карточку
+    api.postNewCard(inputListValuesObject)
+      .then((newCardObject) => {
+        // Создаём объект newCardFromForm класса Card
+        const newCardFromForm = new Card(newCardObject, '#cards-list__item-template', {
+          handleCardClick: () => imagePopup.open(newCardObject)
+        }, selectorsAndClassOfCard);
+        const newCardFromFormElement = newCardFromForm.generateCard();
 
-    const newCardFromForm = new Card(inputListValuesObject, '#cards-list__item-template', {
-      handleCardClick: () => imagePopup.open(inputListValuesObject)
-    }, selectorsAndClassOfCard);
-    const newCardFromFormElement = newCardFromForm.generateCard();
+        cardsRenderer.addItem(newCardFromFormElement, false);
+        addCardsPopup.close();
 
-    cardsRenderer.addItem(newCardFromFormElement);
-    addCardsPopup.close();
-
-    // Возвращаем новую карточку
-    return newCardFromFormElement;
+        // Возвращаем новую карточку
+        return newCardFromFormElement;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 });
 addCardsPopup.setEventListeners();
