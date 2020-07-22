@@ -20,6 +20,9 @@ const jobInput = document.querySelector('.popup__field_el_profession');
 // Создаём объект userInfo класса UserInfo
 const userInfo = new UserInfo(selectorsOfProfile);
 
+// Объявляем переменные currentUserId, cardId, idEquality для выявления принадлежности карточек текущему пользователю
+let currentUserId, cardOwnerId, idEquality;
+
 // Создаём объект api класса Api
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-13',
@@ -35,6 +38,9 @@ api.getUserInfo()
     document.querySelector(selectorsOfProfile.profileAvatarSelector).alt = initialUserInfo.name;
 
     userInfo.setUserInfo(initialUserInfo);
+
+    // Присваиваем переменной currentUserId id текущего пользователя
+    currentUserId = initialUserInfo._id;
   })
   .catch((err) => {
     console.log(err);
@@ -58,29 +64,42 @@ imagePopup.setEventListeners();
 
 // Создаём объект imageDeletionPopup класса PopupWithDeletionForm
 const imageDeletionPopup = new PopupWithDeletionForm('.popup_type_card-deletion', {
-  handleSubmitForm: () => {
-    // Скрываем попап формы подтверждения удаления карточки
-    imageDeletionPopup.close();
+  handleSubmitForm: cardId => {
+    // Удаляем карточку
+    api.deleteCard(cardId)
+      .then(() => {
+        document.getElementById(cardId).remove();
+        imageDeletionPopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 });
-imageDeletionPopup.setEventListeners();
 
 // Объявляем переменную cardsRenderer
 let cardsRenderer;
+
+// Сравниваем id текущего пользователя с id владельца карточки
+function checkIdEquality(itemOwnerId) {
+  // Присваиваем переменной cardOwnerId id владельца карточки
+  cardOwnerId = itemOwnerId;
+  idEquality = (currentUserId === cardOwnerId) ? true : false;
+}
 
 function createCardObject(initialCards) {
   // Создаём объект cardsRenderer класса Section
   cardsRenderer = new Section({
     items: initialCards,
     renderer: item => {
+      // Вызываем функцию сравнения id текущего пользователя с id владельца карточки
+      checkIdEquality(item.owner._id);
+
       // Создаём объект card класса Card
       const card = new Card(item, '#cards-list__item-template', {
         handleCardClick: () => imagePopup.open(item),
-        deleteCard: () => {
-          // Открываем попап формы подтверждения удаления карточки
-          imageDeletionPopup.open();
-        }
-      }, selectorsAndClassOfCard);
+        handleBasketClick: () => imageDeletionPopup.open(item._id)
+      }, selectorsAndClassOfCard, idEquality);
       const cardElement = card.generateCard();
 
       // Возвращаем новую карточку
@@ -124,14 +143,14 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
     // Добавляем новую карточку
     api.postNewCard(inputListValuesObject)
       .then((newCardObject) => {
+        // Вызываем функцию сравнения id текущего пользователя с id владельца карточки
+        checkIdEquality(newCardObject.owner._id);
+
         // Создаём объект newCardFromForm класса Card
         const newCardFromForm = new Card(newCardObject, '#cards-list__item-template', {
           handleCardClick: () => imagePopup.open(newCardObject),
-          deleteCard: () => {
-            // Открываем попап формы подтверждения удаления карточки
-            imageDeletionPopup.open();
-          }
-        }, selectorsAndClassOfCard);
+          handleBasketClick: () => imageDeletionPopup.open(newCardObject._id)
+        }, selectorsAndClassOfCard, idEquality);
         const newCardFromFormElement = newCardFromForm.generateCard();
 
         cardsRenderer.addItem(newCardFromFormElement, false);

@@ -15,7 +15,8 @@ const selectorsAndClassOfCard = {
   cardLikeIconSelector: '.cards-list__like-icon',
   cardLikeIconActiveClass: 'cards-list__like-icon_active',
   cardLikeAmountTextSelector: '.cards-list__like-amount-text',
-  cardDeleteIconSelector: '.cards-list__delete-icon'
+  cardDeleteIconSelector: '.cards-list__delete-icon',
+  cardDeleteIconHiddenClass: 'cards-list__delete-icon_hidden',
 };
 
 // Объект настроек с селекторами и классом карточки

@@ -1,17 +1,20 @@
 class Card {
-  constructor(data, cardSelector, { handleCardClick, deleteCard }, selectorsAndClass) {
+  constructor(data, cardSelector, { handleCardClick, handleBasketClick }, selectorsAndClass, idEquality) {
     this._name = data.name;
     this._link = data.link;
     this._likesCounter = data.likes;
+    this._cardId = data._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    this._deleteCard = deleteCard;
+    this._handleBasketClick = handleBasketClick;
     this._cardImageSelector = selectorsAndClass.cardImageSelector;
     this._cardTitleSelector = selectorsAndClass.cardTitleSelector;
     this._cardLikeIconSelector = selectorsAndClass.cardLikeIconSelector;
     this._cardLikeIconActiveClass = selectorsAndClass.cardLikeIconActiveClass;
     this._cardLikeAmountTextSelector = selectorsAndClass.cardLikeAmountTextSelector;
     this._cardDeleteIconSelector = selectorsAndClass.cardDeleteIconSelector;
+    this._cardDeleteIconHiddenClass = selectorsAndClass.cardDeleteIconHiddenClass;
+    this._idEquality = idEquality;
   }
 
   // Метод клонирования содержимого селектора шаблона
@@ -26,6 +29,11 @@ class Card {
     this._element = this._getTemplate();
     this._setEventListeners();
 
+    if (this._idEquality === false) {
+      this._element.querySelector(this._cardDeleteIconSelector).classList.add(this._cardDeleteIconHiddenClass);
+    }
+
+    this._element.id = this._cardId;
     this._element.querySelector(this._cardImageSelector).src = this._link;
     this._element.querySelector(this._cardImageSelector).alt = this._name;
     this._element.querySelector(this._cardTitleSelector).textContent = this._name;
@@ -43,7 +51,7 @@ class Card {
   _setEventListeners() {
     this._element.querySelector(this._cardLikeIconSelector).addEventListener('click', this._likeCard.bind(this));
     this._element.querySelector(this._cardDeleteIconSelector).addEventListener('click', () => {
-      this._deleteCard();
+      this._handleBasketClick();
     });
     this._element.querySelector(this._cardImageSelector).addEventListener('click', () => {
       this._handleCardClick();

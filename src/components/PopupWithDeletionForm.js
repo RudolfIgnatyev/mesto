@@ -6,12 +6,18 @@ class PopupWithDeletionForm extends Popup {
     this._handleSubmitForm = handleSubmitForm;
   }
 
-  setEventListeners() {
+  open(cardId) {
+    super.open();
+
+    this.setEventListeners(cardId);
+  }
+
+  setEventListeners(cardId) {
     super.setEventListeners();
 
     this._popup.querySelector('.popup__container').addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._handleSubmitForm();
+      this._handleSubmitForm(cardId);
     });
   }
 }
