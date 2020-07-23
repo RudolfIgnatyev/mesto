@@ -47,6 +47,20 @@ class Card {
     this._element.querySelector(this._cardLikeIconSelector).classList.toggle(this._cardLikeIconActiveClass);
   }
 
+  // Публичный метод удаления карточки
+  deleteCard(cardId) {
+    const myCard = document.getElementById(cardId);
+    myCard.remove();
+
+    myCard.querySelector(this._cardLikeIconSelector).removeEventListener('click', this._likeCard.bind(this));
+    myCard.querySelector(this._cardDeleteIconSelector).removeEventListener('click', () => {
+      this._handleBasketClick();
+    });
+    myCard.querySelector(this._cardImageSelector).removeEventListener('click', () => {
+      this._handleCardClick();
+    });
+  }
+
   // Метод прикрепления обработчиков к элементам
   _setEventListeners() {
     this._element.querySelector(this._cardLikeIconSelector).addEventListener('click', this._likeCard.bind(this));

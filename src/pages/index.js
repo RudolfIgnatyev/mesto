@@ -20,8 +20,8 @@ const jobInput = document.querySelector('.popup__field_el_profession');
 // Создаём объект userInfo класса UserInfo
 const userInfo = new UserInfo(selectorsOfProfile);
 
-// Объявляем переменные currentUserId, cardId, idEquality для выявления принадлежности карточек текущему пользователю
-let currentUserId, cardOwnerId, idEquality;
+// Объявляем переменные currentUserId, idEquality
+let currentUserId, idEquality;
 
 // Создаём объект api класса Api
 const api = new Api({
@@ -62,13 +62,18 @@ const imagePopup = new PopupWithImage('.popup_type_images', {
 });
 imagePopup.setEventListeners();
 
+// Объявляем переменные cardsRenderer, card, newCardFromForm, imageDeletionPopup
+let cardsRenderer, card, newCardFromForm, imageDeletionPopup;
+
 // Создаём объект imageDeletionPopup класса PopupWithDeletionForm
-const imageDeletionPopup = new PopupWithDeletionForm('.popup_type_card-deletion', {
+imageDeletionPopup = new PopupWithDeletionForm('.popup_type_card-deletion', {
   handleSubmitForm: cardId => {
     // Удаляем карточку
     api.deleteCard(cardId)
       .then(() => {
-        document.getElementById(cardId).remove();
+        // Удаляем свою карточку из разметки
+        card.deleteCard(cardId);
+
         imageDeletionPopup.close();
       })
       .catch((err) => {
@@ -77,29 +82,25 @@ const imageDeletionPopup = new PopupWithDeletionForm('.popup_type_card-deletion'
   }
 });
 
-// Объявляем переменную cardsRenderer
-let cardsRenderer;
-
 // Сравниваем id текущего пользователя с id владельца карточки
 function checkIdEquality(itemOwnerId) {
-  // Присваиваем переменной cardOwnerId id владельца карточки
-  cardOwnerId = itemOwnerId;
-  idEquality = (currentUserId === cardOwnerId) ? true : false;
+  idEquality = (currentUserId === itemOwnerId) ? true : false;
 }
 
-function createCardObject(initialCards) {
+function createSectionObject(initialCards) {
   // Создаём объект cardsRenderer класса Section
   cardsRenderer = new Section({
     items: initialCards,
-    renderer: item => {
+    renderer: initialCardObject => {
       // Вызываем функцию сравнения id текущего пользователя с id владельца карточки
-      checkIdEquality(item.owner._id);
+      checkIdEquality(initialCardObject.owner._id);
 
       // Создаём объект card класса Card
-      const card = new Card(item, '#cards-list__item-template', {
-        handleCardClick: () => imagePopup.open(item),
-        handleBasketClick: () => imageDeletionPopup.open(item._id)
+      card = new Card(initialCardObject, '#cards-list__item-template', {
+        handleCardClick: () => imagePopup.open(initialCardObject),
+        handleBasketClick: () => imageDeletionPopup.open(initialCardObject._id)
       }, selectorsAndClassOfCard, idEquality);
+
       const cardElement = card.generateCard();
 
       // Возвращаем новую карточку
@@ -112,7 +113,7 @@ function createCardObject(initialCards) {
 api.getInitialCards()
   .then((initialCards) => {
     // Вызываем функцию создания объекта класса Section
-    createCardObject(initialCards);
+    createSectionObject(initialCards);
     // Отрисовываем каждый отдельный элемент
     cardsRenderer.renderItems();
   })
@@ -128,6 +129,7 @@ const editProfilePopup = new PopupWithForm('.popup_type_profile', {
       .then((newUserInfo) => {
         // Принимаем новые данные пользователя и добавляем их на страницу
         userInfo.setUserInfo(newUserInfo);
+
         editProfilePopup.close();
       })
       .catch((err) => {
@@ -147,13 +149,13 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
         checkIdEquality(newCardObject.owner._id);
 
         // Создаём объект newCardFromForm класса Card
-        const newCardFromForm = new Card(newCardObject, '#cards-list__item-template', {
-          handleCardClick: () => imagePopup.open(newCardObject),
-          handleBasketClick: () => imageDeletionPopup.open(newCardObject._id)
-        }, selectorsAndClassOfCard, idEquality);
+        newCardFromForm = new Card(newCardObject, '#cards-list__item-template', {
+          handleCardClick: () => imagePopup.open(newCardObject)
+        }, selectorsAndClassOfCard);
         const newCardFromFormElement = newCardFromForm.generateCard();
 
-        cardsRenderer.addItem(newCardFromFormElement, false);
+        cardsRenderer.addItem(newCardFromFormElement);
+
         addCardsPopup.close();
 
         // Возвращаем новую карточку
