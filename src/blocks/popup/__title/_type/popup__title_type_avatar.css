@@ -1,0 +1,9 @@
+.popup__title_type_avatar {
+  margin: 34px 0 48px;
+}
+
+@media (max-width: 767px) {
+  .popup__title_type_avatar {
+    margin: 30px 0 31px;
+  }
+}

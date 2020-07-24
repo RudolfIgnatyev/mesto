@@ -11,8 +11,10 @@ import './index.css';
 
 // Находим элементы в DOM
 const editButton = document.querySelector('.profile__edit-button');
+const editAvatarButton = document.querySelector('.profile__avatar-edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const editProfile = document.querySelector('.popup_type_profile');
+const editAvatar = document.querySelector('.popup_type_avatar');
 const addCards = document.querySelector('.popup_type_cards');
 const nameInput = document.querySelector('.popup__field_el_name');
 const jobInput = document.querySelector('.popup__field_el_profession');
@@ -24,8 +26,6 @@ const userInfo = new UserInfo(selectorsOfProfile);
 let currentUserId, idEquality, cardsRenderer, card, newCardFromForm;
 // Объявляем переменную mineCardlikedProperty со значением false по умолчанию
 let likedProperty = false;
-// Объявляем переменную NotMineCardlikedProperty со значением false по умолчанию
-// let NotMineCardlikedProperty = false;
 
 // Создаём объект api класса Api
 const api = new Api({
@@ -38,10 +38,8 @@ const api = new Api({
 // Загружаем информацию о пользователе
 api.getUserInfo()
   .then((initialUserInfo) => {
-    document.querySelector(selectorsOfProfile.profileAvatarSelector).src = initialUserInfo.avatar;
-    document.querySelector(selectorsOfProfile.profileAvatarSelector).alt = initialUserInfo.name;
-
     userInfo.setUserInfo(initialUserInfo);
+    userInfo.setUserAvatar(initialUserInfo.avatar);
 
     // Присваиваем переменной currentUserId id текущего пользователя
     currentUserId = initialUserInfo._id;
@@ -58,6 +56,10 @@ editProfileValidator.enableValidation();
 const addCardsValidator = new FormValidator(selectorsAndClassesOfForm, addCards);
 // Активируем валидацию формы добавления карточки
 addCardsValidator.enableValidation();
+// Создаём объект editAvatarValidator класса FormValidator
+const editAvatarValidator = new FormValidator(selectorsAndClassesOfForm, editAvatar);
+// Активируем валидацию формы редактирования аватара
+editAvatarValidator.enableValidation();
 
 // Создаём объект imagePopup класса PopupWithImage
 const imagePopup = new PopupWithImage('.popup_type_images', {
@@ -207,6 +209,26 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
 });
 addCardsPopup.setEventListeners();
 
+
+// Создаём объект editProfilePopup класса PopupWithForm
+const editAvatarPopup = new PopupWithForm('.popup_type_avatar', {
+  handleSubmitForm: (inputListValuesObject) => {
+    // Редактируем профиль
+    api.patchAvatar(inputListValuesObject)
+      .then((editedAvatar) => {
+        // Принимаем новый аватар пользователя и добавляем его на страницу
+        userInfo.setUserAvatar(editedAvatar.avatar);
+
+        editAvatarPopup.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+});
+editAvatarPopup.setEventListeners();
+
+
 // Прикрепляем обработчики к элементам
 editButton.addEventListener('click', () => {
   // Очищаем валидацию формы
@@ -217,6 +239,12 @@ editButton.addEventListener('click', () => {
   // Вкладываем в поля формы редактирования профиля значения по умолчанию
   nameInput.value = userInfo.getUserInfo().name;
   jobInput.value = userInfo.getUserInfo().job;
+});
+editAvatarButton.addEventListener('click', () => {
+  // Очищаем валидацию формы
+  editAvatarValidator.resetValidation();
+  // Открываем попап формы добавления карточки
+  editAvatarPopup.open();
 });
 addButton.addEventListener('click', () => {
   // Очищаем валидацию формы

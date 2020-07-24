@@ -16,7 +16,9 @@
       <section class="profile">
         <div class="profile__container">
           <div class="profile__area">
-            <img class="profile__avatar">
+            <button class="profile__avatar-edit-button" type="button" aria-label="Редактировать аватар">
+              <img class="profile__avatar" alt="Аватар пользователя">
+            </button>
             <div class="profile__info">
               <h1 class="profile__title"></h1>
               <button class="profile__edit-button" type="button" aria-label="Редактировать"></button>
@@ -54,6 +56,16 @@
           <button class="popup__save-button popup__save-button_disabled" type="submit">Создать</button>
         </form>
         <button class="popup__close-icon popup__close-icon_type_cards" type="button" aria-label="Закрыть"></button>
+      </section>
+
+      <section class="popup popup_type_avatar">
+        <form class="popup__container popup__container_type_avatar" name="popup__container_type_avatar" action="#" method="POST">
+          <h2 class="popup__title popup__title_type_avatar">Обновить аватар</h2>
+          <input class="popup__field popup__field_el_avatar" type="url" name="avatar" id="avatar-field" placeholder="Ссылка на картинку" required>
+          <span class="popup__error" id="avatar-field-error"></span>
+          <button class="popup__save-button popup__save-button_type_avatar popup__save-button_disabled" type="submit">Сохранить</button>
+        </form>
+        <button class="popup__close-icon popup__close-icon_type_avatar" type="button" aria-label="Закрыть"></button>
       </section>
 
       <section class="popup popup_type_images">

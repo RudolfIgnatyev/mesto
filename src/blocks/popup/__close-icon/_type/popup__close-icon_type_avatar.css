@@ -1,0 +1,9 @@
+.popup__close-icon_type_avatar {
+  top: calc((100% - 272px)/2 - 40px);
+}
+
+@media (max-width: 767px) {
+  .popup__close-icon_type_avatar {
+    top: calc((100% - 221px)/2 - 30px);
+  }
+}

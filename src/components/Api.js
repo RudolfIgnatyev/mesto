@@ -123,6 +123,23 @@ class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
+
+  // Публичный метод добавления на сервер новой карточки
+  patchAvatar(avatar) {
+    return fetch(`${this.baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this.headers,
+      body: JSON.stringify(avatar)
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        // Если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
 }
 
 export { Api };

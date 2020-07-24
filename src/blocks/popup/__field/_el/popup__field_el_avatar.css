@@ -1,0 +1,9 @@
+.popup__field_el_avatar {
+  margin-bottom: 12px;
+}
+
+@media (max-width: 767px) {
+  .popup__field {
+    margin-bottom: 8px;
+  }
+}
