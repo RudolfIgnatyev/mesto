@@ -22,8 +22,10 @@ const userInfo = new UserInfo(selectorsOfProfile);
 
 // Объявляем переменные currentUserId, idEquality, cardsRenderer, card, newCardFromForm
 let currentUserId, idEquality, cardsRenderer, card, newCardFromForm;
-// Объявляем переменную likedProperty со значением false по умолчанию
+// Объявляем переменную mineCardlikedProperty со значением false по умолчанию
 let likedProperty = false;
+// Объявляем переменную NotMineCardlikedProperty со значением false по умолчанию
+// let NotMineCardlikedProperty = false;
 
 // Создаём объект api класса Api
 const api = new Api({

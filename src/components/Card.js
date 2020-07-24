@@ -45,8 +45,7 @@ class Card {
     // Проверяем наличие "лайка" у карточки после загрузки страницы для автоматической пометки понравившейся карточки в положительном случае
     for (let i = 0; i < this._likesCounter.length; i++) {
       if (this._likesCounter[i]._id === this._ownerId) {
-        this._element.querySelector(this._cardLikeIconSelector).classList.add(this._cardLikeIconActiveClass);
-
+        this._element.querySelector(this._cardLikeIconSelector).classList.toggle(this._cardLikeIconActiveClass);
       }
     }
 
@@ -55,7 +54,6 @@ class Card {
 
   // Метод создания и удаления пометки понравившейся карточки
   _likeCard() {
-    // this._likedProperty = !this._likedProperty;
     this._element.querySelector(this._cardLikeIconSelector).classList.toggle(this._cardLikeIconActiveClass);
 
     this._likedProperty = (this._element.querySelector(this._cardLikeIconSelector).classList.contains('cards-list__like-icon_active')) ? true : false;
