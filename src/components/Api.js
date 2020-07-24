@@ -4,20 +4,23 @@ class Api {
     this.headers = headers;
   }
 
+  // Метод проверки промиса с его разрешением или отклонением в зависимости от ответа сервера
+  _checkPromise(res) {
+    if (res.ok) {
+      return res.json();
+    }
+
+    // Если ошибка, отклоняем промис
+    return Promise.reject(`Ошибка: ${res.status}`);
+  }
+
   // Публичный метод загрузки с сервера информации о пользователе
   getUserInfo() {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'GET',
       headers: this.headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // Если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._checkPromise(res));
   }
 
   // Публичный метод загрузки с сервера начальных карточек
@@ -26,14 +29,7 @@ class Api {
       method: 'GET',
       headers: this.headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // Если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._checkPromise(res));
   }
 
   // Публичный метод редактирования профиля с сохранением данных на сервере
@@ -46,14 +42,7 @@ class Api {
         about: profileNewInfo.popup__field_el_profession
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // Если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._checkPromise(res));
   }
 
   // Публичный метод добавления на сервер новой карточки
@@ -66,14 +55,7 @@ class Api {
         link: item.link
       })
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // Если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._checkPromise(res));
   }
 
   // Публичный метод удаления из сервера карточки
@@ -82,14 +64,7 @@ class Api {
       method: 'DELETE',
       headers: this.headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // Если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._checkPromise(res));
   }
 
   // Публичный метод создания пометки понравившейся карточки на сервере
@@ -98,14 +73,7 @@ class Api {
       method: 'PUT',
       headers: this.headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // Если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._checkPromise(res));
   }
 
   // Публичный метод удаления пометки понравившейся карточки на сервере
@@ -114,31 +82,17 @@ class Api {
       method: 'DELETE',
       headers: this.headers
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // Если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._checkPromise(res));
   }
 
-  // Публичный метод добавления на сервер новой карточки
+  // Публичный метод изменения на сервере аватара пользователя
   patchAvatar(avatar) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
       body: JSON.stringify(avatar)
     })
-      .then(res => {
-        if (res.ok) {
-          return res.json();
-        }
-
-        // Если ошибка, отклоняем промис
-        return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      .then(res => this._checkPromise(res));
   }
 }
 

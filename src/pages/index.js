@@ -18,6 +18,9 @@ const editAvatar = document.querySelector('.popup_type_avatar');
 const addCards = document.querySelector('.popup_type_cards');
 const nameInput = document.querySelector('.popup__field_el_name');
 const jobInput = document.querySelector('.popup__field_el_profession');
+const saveProfileInfoButton = document.querySelector('.popup__save-button_type_profile');
+const createCardButton = document.querySelector('.popup__save-button_type_cards');
+const saveNewAvatarButton = document.querySelector('.popup__save-button_type_avatar');
 
 // Создаём объект userInfo класса UserInfo
 const userInfo = new UserInfo(selectorsOfProfile);
@@ -160,9 +163,11 @@ api.getInitialCards()
 // Создаём объект editProfilePopup класса PopupWithForm
 const editProfilePopup = new PopupWithForm('.popup_type_profile', {
   handleSubmitForm: (inputListValuesObject) => {
+    saveProfileInfoButton.textContent = 'Сохранение...'
     // Редактируем профиль
     api.patchProfileInfo(inputListValuesObject)
       .then((newUserInfo) => {
+        saveProfileInfoButton.textContent = 'Сохранить';
         // Принимаем новые данные пользователя и добавляем их на страницу
         userInfo.setUserInfo(newUserInfo);
 
@@ -178,9 +183,11 @@ editProfilePopup.setEventListeners();
 // Создаём объект addCardsPopup класса PopupWithForm
 const addCardsPopup = new PopupWithForm('.popup_type_cards', {
   handleSubmitForm: (inputListValuesObject) => {
+    createCardButton.textContent = 'Сохранение...'
     // Добавляем новую карточку
     api.postNewCard(inputListValuesObject)
       .then((newCardObject) => {
+        createCardButton.textContent = 'Создать';
         // Вызываем функцию сравнения id текущего пользователя с id владельца карточки
         checkIdEquality(newCardObject.owner._id);
 
@@ -209,13 +216,14 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
 });
 addCardsPopup.setEventListeners();
 
-
-// Создаём объект editProfilePopup класса PopupWithForm
+// Создаём объект editAvatarPopup класса PopupWithForm
 const editAvatarPopup = new PopupWithForm('.popup_type_avatar', {
   handleSubmitForm: (inputListValuesObject) => {
-    // Редактируем профиль
+    saveNewAvatarButton.textContent = 'Сохранение...'
+    // Меняем аватар
     api.patchAvatar(inputListValuesObject)
       .then((editedAvatar) => {
+        saveNewAvatarButton.textContent = 'Сохранить';
         // Принимаем новый аватар пользователя и добавляем его на страницу
         userInfo.setUserAvatar(editedAvatar.avatar);
 
@@ -227,7 +235,6 @@ const editAvatarPopup = new PopupWithForm('.popup_type_avatar', {
   }
 });
 editAvatarPopup.setEventListeners();
-
 
 // Прикрепляем обработчики к элементам
 editButton.addEventListener('click', () => {
