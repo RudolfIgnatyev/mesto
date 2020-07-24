@@ -91,6 +91,38 @@ class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
+
+  // Публичный метод создания пометки понравившейся карточки на сервере
+  putCardLike(cardId) {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+      method: 'PUT',
+      headers: this.headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        // Если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
+  // Публичный метод удаления пометки понравившейся карточки на сервере
+  deleteCardLike(cardId) {
+    return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+      method: 'DELETE',
+      headers: this.headers
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+
+        // Если ошибка, отклоняем промис
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
 }
 
 export { Api };

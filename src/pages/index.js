@@ -20,8 +20,10 @@ const jobInput = document.querySelector('.popup__field_el_profession');
 // Создаём объект userInfo класса UserInfo
 const userInfo = new UserInfo(selectorsOfProfile);
 
-// Объявляем переменные currentUserId, idEquality
-let currentUserId, idEquality;
+// Объявляем переменные currentUserId, idEquality, cardsRenderer, card, newCardFromForm
+let currentUserId, idEquality, cardsRenderer, card, newCardFromForm;
+// Объявляем переменную likedProperty со значением false по умолчанию
+let likedProperty = false;
 
 // Создаём объект api класса Api
 const api = new Api({
@@ -62,11 +64,8 @@ const imagePopup = new PopupWithImage('.popup_type_images', {
 });
 imagePopup.setEventListeners();
 
-// Объявляем переменные cardsRenderer, card, newCardFromForm, imageDeletionPopup
-let cardsRenderer, card, newCardFromForm, imageDeletionPopup;
-
 // Создаём объект imageDeletionPopup класса PopupWithDeletionForm
-imageDeletionPopup = new PopupWithDeletionForm('.popup_type_card-deletion', {
+const imageDeletionPopup = new PopupWithDeletionForm('.popup_type_card-deletion', {
   handleSubmitForm: cardId => {
     // Удаляем карточку
     api.deleteCard(cardId)
@@ -87,6 +86,36 @@ function checkIdEquality(itemOwnerId) {
   idEquality = (currentUserId === itemOwnerId) ? true : false;
 }
 
+// Функция постановки "лайка" карточке
+function handleCardLike(cardId, cardLikeAmountElement, cardLikeElement) {
+  cardLikeElement.disabled = true;
+  api.putCardLike(cardId)
+    .then((cardObject) => {
+      cardLikeAmountElement.textContent = cardObject.likes.length;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      cardLikeElement.disabled = false;
+    });
+}
+
+// Функция снятия "лайка" с карточки
+function handleCardDislike(cardId, cardLikeAmountElement, cardLikeElement) {
+  cardLikeElement.disabled = true;
+  api.deleteCardLike(cardId)
+    .then((cardObject) => {
+      cardLikeAmountElement.textContent = cardObject.likes.length;
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      cardLikeElement.disabled = false;
+    });
+}
+
 function createSectionObject(initialCards) {
   // Создаём объект cardsRenderer класса Section
   cardsRenderer = new Section({
@@ -98,8 +127,11 @@ function createSectionObject(initialCards) {
       // Создаём объект card класса Card
       card = new Card(initialCardObject, '#cards-list__item-template', {
         handleCardClick: () => imagePopup.open(initialCardObject),
+        handleHeartClick: (cardId, cardLikeAmountElement, cardLikeElement, currentLikedProperty) => {
+          currentLikedProperty ? handleCardLike(cardId, cardLikeAmountElement, cardLikeElement) : handleCardDislike(cardId, cardLikeAmountElement, cardLikeElement);
+        },
         handleBasketClick: () => imageDeletionPopup.open(initialCardObject._id)
-      }, selectorsAndClassOfCard, idEquality);
+      }, selectorsAndClassOfCard, idEquality, likedProperty);
 
       const cardElement = card.generateCard();
 
@@ -150,8 +182,13 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
 
         // Создаём объект newCardFromForm класса Card
         newCardFromForm = new Card(newCardObject, '#cards-list__item-template', {
-          handleCardClick: () => imagePopup.open(newCardObject)
-        }, selectorsAndClassOfCard);
+          handleCardClick: () => imagePopup.open(newCardObject),
+          handleHeartClick: (cardId, cardLikeAmountElement, cardLikeElement, currentLikedProperty) => {
+            currentLikedProperty ? handleCardLike(cardId, cardLikeAmountElement, cardLikeElement) : handleCardDislike(cardId, cardLikeAmountElement, cardLikeElement);
+          },
+          handleBasketClick: () => imageDeletionPopup.open(newCardObject._id)
+        }, selectorsAndClassOfCard, idEquality, likedProperty);
+
         const newCardFromFormElement = newCardFromForm.generateCard();
 
         cardsRenderer.addItem(newCardFromFormElement);

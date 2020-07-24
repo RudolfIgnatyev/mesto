@@ -1,11 +1,13 @@
 class Card {
-  constructor(data, cardSelector, { handleCardClick, handleBasketClick }, selectorsAndClass, idEquality) {
+  constructor(data, cardSelector, { handleCardClick, handleHeartClick, handleBasketClick }, selectorsAndClass, idEquality, likedProperty) {
     this._name = data.name;
     this._link = data.link;
     this._likesCounter = data.likes;
     this._cardId = data._id;
+    this._ownerId = data.owner._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._handleHeartClick = handleHeartClick;
     this._handleBasketClick = handleBasketClick;
     this._cardImageSelector = selectorsAndClass.cardImageSelector;
     this._cardTitleSelector = selectorsAndClass.cardTitleSelector;
@@ -15,6 +17,7 @@ class Card {
     this._cardDeleteIconSelector = selectorsAndClass.cardDeleteIconSelector;
     this._cardDeleteIconHiddenClass = selectorsAndClass.cardDeleteIconHiddenClass;
     this._idEquality = idEquality;
+    this._likedProperty = likedProperty;
   }
 
   // Метод клонирования содержимого селектора шаблона
@@ -29,22 +32,35 @@ class Card {
     this._element = this._getTemplate();
     this._setEventListeners();
 
-    if (this._idEquality === false) {
-      this._element.querySelector(this._cardDeleteIconSelector).classList.add(this._cardDeleteIconHiddenClass);
-    }
-
     this._element.id = this._cardId;
     this._element.querySelector(this._cardImageSelector).src = this._link;
     this._element.querySelector(this._cardImageSelector).alt = this._name;
     this._element.querySelector(this._cardTitleSelector).textContent = this._name;
     this._element.querySelector(this._cardLikeAmountTextSelector).textContent = this._likesCounter.length;
 
+    // Скрываем для пользователя элемент корзинки карточки, если он не создатель карточки
+    if (this._idEquality === false) {
+      this._element.querySelector(this._cardDeleteIconSelector).classList.add(this._cardDeleteIconHiddenClass);
+    }
+    // Проверяем наличие "лайка" у карточки после загрузки страницы для автоматической пометки понравившейся карточки в положительном случае
+    for (let i = 0; i < this._likesCounter.length; i++) {
+      if (this._likesCounter[i]._id === this._ownerId) {
+        this._element.querySelector(this._cardLikeIconSelector).classList.add(this._cardLikeIconActiveClass);
+
+      }
+    }
+
     return this._element;
   }
 
-  // Метод пометки понравившейся карточки
+  // Метод создания и удаления пометки понравившейся карточки
   _likeCard() {
+    // this._likedProperty = !this._likedProperty;
     this._element.querySelector(this._cardLikeIconSelector).classList.toggle(this._cardLikeIconActiveClass);
+
+    this._likedProperty = (this._element.querySelector(this._cardLikeIconSelector).classList.contains('cards-list__like-icon_active')) ? true : false;
+
+    this._handleHeartClick(this._element.id, this._element.querySelector(this._cardLikeAmountTextSelector), this._element.querySelector(this._cardLikeIconSelector), this._likedProperty);
   }
 
   // Публичный метод удаления карточки
