@@ -25,10 +25,10 @@ const saveNewAvatarButton = document.querySelector('.popup__save-button_type_ava
 // Создаём объект userInfo класса UserInfo
 const userInfo = new UserInfo(selectorsOfProfile);
 
-// Объявляем переменные currentUserId, idEquality, cardsRenderer, card, newCardFromForm
-let currentUserId, idEquality, cardsRenderer, card, newCardFromForm;
-// Объявляем переменную mineCardlikedProperty со значением false по умолчанию
-let likedProperty = false;
+// Объявляем переменные currentUserId, idEquality, cardsRenderer, card
+let currentUserId, idEquality, cardsRenderer, card;
+// Объявляем константу likedProperty со значением false по умолчанию
+const likedProperty = false;
 
 // Создаём объект api класса Api
 const api = new Api({
@@ -98,6 +98,7 @@ function handleCardLike(cardId, cardLikeAmountElement, cardLikeElement) {
   cardLikeElement.disabled = true;
   api.putCardLike(cardId)
     .then((cardObject) => {
+      cardLikeElement.classList.toggle(selectorsAndClassOfCard.cardLikeIconActiveClass);
       cardLikeAmountElement.textContent = cardObject.likes.length;
     })
     .catch((err) => {
@@ -113,6 +114,7 @@ function handleCardDislike(cardId, cardLikeAmountElement, cardLikeElement) {
   cardLikeElement.disabled = true;
   api.deleteCardLike(cardId)
     .then((cardObject) => {
+      cardLikeElement.classList.toggle(selectorsAndClassOfCard.cardLikeIconActiveClass);
       cardLikeAmountElement.textContent = cardObject.likes.length;
     })
     .catch((err) => {
@@ -123,22 +125,27 @@ function handleCardDislike(cardId, cardLikeAmountElement, cardLikeElement) {
     });
 }
 
+function createCardObject(cardObject) {
+  // Вызываем функцию сравнения id текущего пользователя с id владельца карточки
+  checkIdEquality(cardObject.owner._id);
+
+  // Создаём объект card класса Card
+  card = new Card(cardObject, '#cards-list__item-template', {
+    handleCardClick: () => imagePopup.open(cardObject),
+    handleHeartClick: (cardId, cardLikeAmountElement, cardLikeElement, currentLikedProperty) => {
+      currentLikedProperty ? handleCardLike(cardId, cardLikeAmountElement, cardLikeElement) : handleCardDislike(cardId, cardLikeAmountElement, cardLikeElement);
+    },
+    handleBasketClick: () => imageDeletionPopup.open(cardObject._id)
+  }, selectorsAndClassOfCard, idEquality, likedProperty, currentUserId);
+}
+
 function createSectionObject(initialCards) {
   // Создаём объект cardsRenderer класса Section
   cardsRenderer = new Section({
     items: initialCards,
     renderer: initialCardObject => {
-      // Вызываем функцию сравнения id текущего пользователя с id владельца карточки
-      checkIdEquality(initialCardObject.owner._id);
-
-      // Создаём объект card класса Card
-      card = new Card(initialCardObject, '#cards-list__item-template', {
-        handleCardClick: () => imagePopup.open(initialCardObject),
-        handleHeartClick: (cardId, cardLikeAmountElement, cardLikeElement, currentLikedProperty) => {
-          currentLikedProperty ? handleCardLike(cardId, cardLikeAmountElement, cardLikeElement) : handleCardDislike(cardId, cardLikeAmountElement, cardLikeElement);
-        },
-        handleBasketClick: () => imageDeletionPopup.open(initialCardObject._id)
-      }, selectorsAndClassOfCard, idEquality, likedProperty);
+      // Вызываем функцию создания объекта класса Card
+      createCardObject(initialCardObject);
 
       const cardElement = card.generateCard();
 
@@ -188,22 +195,13 @@ const addCardsPopup = new PopupWithForm('.popup_type_cards', {
     api.postNewCard(inputListValuesObject)
       .then((newCardObject) => {
         createCardButton.textContent = 'Создать';
-        // Вызываем функцию сравнения id текущего пользователя с id владельца карточки
-        checkIdEquality(newCardObject.owner._id);
 
-        // Создаём объект newCardFromForm класса Card
-        newCardFromForm = new Card(newCardObject, '#cards-list__item-template', {
-          handleCardClick: () => imagePopup.open(newCardObject),
-          handleHeartClick: (cardId, cardLikeAmountElement, cardLikeElement, currentLikedProperty) => {
-            currentLikedProperty ? handleCardLike(cardId, cardLikeAmountElement, cardLikeElement) : handleCardDislike(cardId, cardLikeAmountElement, cardLikeElement);
-          },
-          handleBasketClick: () => imageDeletionPopup.open(newCardObject._id)
-        }, selectorsAndClassOfCard, idEquality, likedProperty);
+        // Вызываем функцию создания объекта класса Card
+        createCardObject(newCardObject);
 
-        const newCardFromFormElement = newCardFromForm.generateCard();
+        const newCardFromFormElement = card.generateCard();
 
         cardsRenderer.addItem(newCardFromFormElement);
-
         addCardsPopup.close();
 
         // Возвращаем новую карточку

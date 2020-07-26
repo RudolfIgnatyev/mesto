@@ -1,10 +1,9 @@
 class Card {
-  constructor(data, cardSelector, { handleCardClick, handleHeartClick, handleBasketClick }, selectorsAndClass, idEquality, likedProperty) {
+  constructor(data, cardSelector, { handleCardClick, handleHeartClick, handleBasketClick }, selectorsAndClass, idEquality, likedProperty, currentUserId) {
     this._name = data.name;
     this._link = data.link;
     this._likesCounter = data.likes;
     this._cardId = data._id;
-    this._ownerId = data.owner._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleHeartClick = handleHeartClick;
@@ -18,6 +17,7 @@ class Card {
     this._cardDeleteIconHiddenClass = selectorsAndClass.cardDeleteIconHiddenClass;
     this._idEquality = idEquality;
     this._likedProperty = likedProperty;
+    this._currentUserId = currentUserId;
   }
 
   // Метод клонирования содержимого селектора шаблона
@@ -44,7 +44,7 @@ class Card {
     }
     // Проверяем наличие "лайка" у карточки после загрузки страницы для автоматической пометки понравившейся карточки в положительном случае
     for (let i = 0; i < this._likesCounter.length; i++) {
-      if (this._likesCounter[i]._id === this._ownerId) {
+      if (this._likesCounter[i]._id === this._currentUserId) {
         this._element.querySelector(this._cardLikeIconSelector).classList.toggle(this._cardLikeIconActiveClass);
       }
     }
@@ -54,9 +54,7 @@ class Card {
 
   // Метод создания и удаления пометки понравившейся карточки
   _likeCard() {
-    this._element.querySelector(this._cardLikeIconSelector).classList.toggle(this._cardLikeIconActiveClass);
-
-    this._likedProperty = (this._element.querySelector(this._cardLikeIconSelector).classList.contains('cards-list__like-icon_active')) ? true : false;
+    this._likedProperty = (!this._element.querySelector(this._cardLikeIconSelector).classList.contains('cards-list__like-icon_active')) ? true : false;
 
     this._handleHeartClick(this._element.id, this._element.querySelector(this._cardLikeAmountTextSelector), this._element.querySelector(this._cardLikeIconSelector), this._likedProperty);
   }
